@@ -945,10 +945,10 @@ function StoriesSection() {
   const [paused, setPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const containerRef = useRef(null);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const goTo = useCallback((next: number) => {
-    setIndex((prev) => (next + storiesData.length) % storiesData.length);
+    setIndex((_prev) => (next + storiesData.length) % storiesData.length);
   }, []);
 
   useEffect(() => {
