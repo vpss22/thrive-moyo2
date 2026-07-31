@@ -719,7 +719,7 @@ export default function About() {
           {/* Team grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-[1200px] mx-auto">
             <TeamMember
-              name="Lydia Obara"
+              name="Lydiah Obara"
               role="Founder & Executive Director"
               image="/team-lydia-obara.jpg"
               bio="Lydiah Obara, CHRP (K), is an accomplished Human Resource leader at The Nairobi Hospital with over 18 years of experience in strategic HR, talent management, organizational development, and employee wellbeing. She holds academic and professional qualifications in Human Resource Management, including certification as a Certified Human Resource Professional (CHRP-K). Lydiah is a published HR author, speaker, and the Founder of Thrive Moyo Spring Foundation, where she champions community empowerment and wellbeing initiatives. She is passionate about developing people, shaping workplace culture, and advancing strategic human resource leadership.
