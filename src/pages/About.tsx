@@ -278,18 +278,24 @@ function TeamMember({
   name,
   role,
   bio,
+  image,
   delay,
 }: {
   name: string;
   role: string;
   bio: string;
+  image: string;
   delay: number;
 }) {
   return (
     <ScrollReveal delay={delay} y={30}>
       <div className="flex flex-col items-center text-center group">
-        <div className="w-40 h-40 rounded-full bg-cream-dark border-[3px] border-gold mb-6 overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-          <Users className="w-12 h-12 text-gold/40" />
+        <div className="w-40 h-40 rounded-full border-[3px] border-gold mb-6 overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-300 bg-cream-dark">
+          <img
+            src={image}
+            alt={name}
+            className="w-full h-full object-cover"
+          />
         </div>
         <h3 className="font-body text-xl font-bold text-forest mb-1">{name}</h3>
         <span className="font-body text-label font-semibold uppercase tracking-widest text-gold mb-3">
@@ -715,48 +721,57 @@ export default function About() {
             <TeamMember
               name="Lydia Obara"
               role="Founder & Executive Director"
-              bio="Public health strategist and visionary leader with 15+ years in addiction treatment, mental health policy, and community wellness. Founded Thrive Moyo Spring Foundation to deliver 360° of care, from substance recovery to trauma healing, ensuring no person, no family, and no community is left behind."
+              image="/team-lydia-obara.jpg"
+              bio="Lydiah Obara, CHRP (K), is an accomplished Human Resource leader at The Nairobi Hospital with over 18 years of experience in strategic HR, talent management, organizational development, and employee wellbeing. She holds academic and professional qualifications in Human Resource Management, including certification as a Certified Human Resource Professional (CHRP-K). Lydiah is a published HR author, speaker, and the Founder of Thrive Moyo Spring Foundation, where she champions community empowerment and wellbeing initiatives. She is passionate about developing people, shaping workplace culture, and advancing strategic human resource leadership.
+"
               delay={0}
             />
             <TeamMember
               name="Dr. David Basangwa"
-              role="Director of Clinical & Psychiatric Services"
-              bio="Board-certified psychiatrist specializing in addiction medicine and trauma care. 12 years leading treatment programs at Nairobi Hospital and Kenyatta National Hospital, with WHO consulting experience."
+              role="Senior Consultant Psychiatrist & Mental Health Advocate"
+              image="/team-david-basangwa.jpg"
+              bio="Dr. David Basangwa is a Senior Consultant Psychiatrist, mental health advocate, and Co-founder & Technical Director of YouBelong Uganda. With over 40 years of experience, he is a leading figure in African mental health, having served as Executive Director of Butabika National Referral Mental Hospital and President of the Uganda Psychiatric Association. He holds an MBChB from Mbarara University, an MMed in Psychiatry from Makerere University, and an MPH from the London School of Hygiene and Tropical Medicine."
               delay={0.1}
             />
             <TeamMember
               name="DR. Magdalyne Kamande"
-              role="Director of Global Partnerships"
-              bio="Former UNICEF program officer with deep networks across Kenya's NGO, government, and philanthropic sectors. Leads partnerships with WHO, UNODC, UNHCR, and global organizations."
+              role="Director of ICT & Transformation Services at The Nairobi Hospital"
+              image="/team-magdalyne-kamande.jpg"
+              bio="Dr. Kamande is the Director of ICT & Transformation Services at The Nairobi Hospital, leading digital strategy, technology infrastructure, and digital health initiatives. She is a recognized technology leader who champions data governance, privacy, and the responsible adoption of AI across regulated industries in Africa."
               delay={0.2}
             />
              <TeamMember
               name="DR. Martha Muhwezi"
-              role="Director of Global Partnerships"
-              bio="Former UNICEF program officer with deep networks across Kenya's NGO, government, and philanthropic sectors. Leads partnerships with WHO, UNODC, UNHCR, and global organizations."
+              role="Executive Director at the Forum for African Women Educationalists (FAWE)"
+              image="/team-martha-muhwezi.jpg"
+              bio="Dr. Martha Muhwezi is the Executive Director of the Forum for African Women Educationalists (FAWE) Regional Secretariat. A development and gender specialist with over 15 years of experience, she has championed girls' education, gender equality, and policy development across Africa. She holds a Bachelor's degree in Education, a Master's in Gender and Women Studies from Makerere University, and a PhD from the University of Nairobi."
               delay={0.2}
             />
             <TeamMember
               name="Dr. Mary Amuyunzu"
-              role="Director of Community Safety & GBV Response"
-              bio="Gender-based violence specialist and child protection advocate. Has built safety networks and crisis response programs in 20+ Kenyan counties and across East Africa."
+              role="Co-founder of the African Institute for Health and Development (AIHD) in Nairobi, Kenya"
+              image="/team-mary-amuyunzu.jpg"
+              bio="Dr. Mary Amuyunzu-Nyamongo is the Co-founder and Technical Advisor of the African Institute for Health and Development (AIHD). A renowned social scientist and public health expert, she specializes in health promotion, non-communicable diseases, gender, and community health. She holds a BA in Anthropology from the University of Nairobi and a PhD in Social Anthropology from the University of Cambridge, UK."
               delay={0.3}
             />
             <TeamMember
               name="Dr Elizabeth Khaemba"
-              role="Director of Crisis Response & Refugee Support"
-              bio="Emergency mental health specialist with experience in conflict zones and refugee camps. Leads 24/7 crisis intervention and global trauma support programs."
+              role="Director & Lead Clinical Psychologist "
+              image="/team-elizabeth-khaemba.jpg"
+              bio="Dr. Elizabeth Khaemba is the Director and Lead Clinical Psychologist at the Transformative Learning Company and Chairperson of the Clinical Psychologists Association of Kenya (CPAK). With over 10 years of experience, she specializes in child, adolescent, and adult mental health and is recognized for her leadership in psychosocial crisis response. She holds an MSc in Clinical Psychology and is pursuing a PhD focused on clinical interventions for learning difficulties."
               delay={0.4}
             />
             <TeamMember
               name="Njeri Kiereini"
-              role="Finance & Operations Director"
-              bio="Chartered accountant with 10 years in nonprofit financial management. Ensures every shilling and every dollar creates measurable impact across our global programs."
+              role="Co-founder of Think Tube Africa, and Media Strategist"
+              image="/team-njeri-kiereini.jpg"
+              bio="Njeri Kiereini is the Founder of the United Women's Council (UWC), Co-founder of Think Tube Africa, and a media strategist. She is a champion of women's leadership and empowerment, known for advancing community development, leadership coaching, and initiatives that amplify women's voices and visibility in Kenya."
               delay={0.5}
             />
             <TeamMember
               name="Wycliffe Bichage"
               role="Finance & Operations Director"
+              image="/team-wycliffe-bichage.jpg"
               bio="Chartered accountant with 10 years in nonprofit financial management. Ensures every shilling and every dollar creates measurable impact across our global programs."
               delay={0.5}
             />
