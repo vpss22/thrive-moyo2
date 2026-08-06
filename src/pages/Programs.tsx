@@ -37,14 +37,20 @@ function ScrollReveal({
   x?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-15% 0px' });
+  const isInView = useInView(ref, { once: true, margin: '-10% 0px' });
   return (
     <motion.div
       ref={ref}
       className={className}
       initial={{ opacity: 0, y, x }}
       animate={isInView ? { opacity: 1, y: 0, x: 0 } : {}}
-      transition={{ duration: 0.8, delay, ease: easeSmooth }}
+      transition={{
+        duration: 0.7,
+        delay,
+        type: 'spring',
+        stiffness: 100,
+        damping: 20,
+      }}
     >
       {children}
     </motion.div>
@@ -780,7 +786,7 @@ export default function Programs() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Outcome Card                                                       */
+/*  Outcome Card — glassmorphism version                          */
 /* ------------------------------------------------------------------ */
 function OutcomeCard({
   number,
@@ -795,7 +801,7 @@ function OutcomeCard({
 }) {
   return (
     <ScrollReveal delay={delay} y={30}>
-      <div className="bg-white/[0.08] rounded-lg p-8 text-center h-full">
+      <div className="glass-card p-8 text-center h-full">
         <div className="font-display text-stat text-gold mb-3">{number}</div>
         <h3 className="font-body text-[1.125rem] font-semibold text-white mb-3">{label}</h3>
         <p className="font-body text-base text-white/70 leading-relaxed">{body}</p>

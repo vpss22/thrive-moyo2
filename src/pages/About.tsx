@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { motion, useInView } from 'framer-motion';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   HeartPulse,
   ShieldCheck,
@@ -14,8 +11,6 @@ import {
   Linkedin,
   ArrowDown,
 } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 /* ------------------------------------------------------------------ */
 /*  Animation helpers                                                  */
@@ -42,14 +37,20 @@ function ScrollReveal({
   x?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-15% 0px' });
+  const isInView = useInView(ref, { once: true, margin: '-10% 0px' });
   return (
     <motion.div
       ref={ref}
       className={className}
       initial={{ opacity: 0, y, x }}
       animate={isInView ? { opacity: 1, y: 0, x: 0 } : {}}
-      transition={{ duration: 0.8, delay, ease: easeSmooth }}
+      transition={{
+        duration: 0.7,
+        delay,
+        type: 'spring',
+        stiffness: 100,
+        damping: 20,
+      }}
     >
       {children}
     </motion.div>
@@ -71,37 +72,21 @@ function SectionLabel({ text, light = false }: { text: string; light?: boolean }
 }
 
 /* ------------------------------------------------------------------ */
-/*  GSAP Timeline Line (isolated component)                            */
+/*  Timeline Line — framer-motion spring version                     */
 /* ------------------------------------------------------------------ */
 function TimelineLine() {
-  const lineRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    if (!lineRef.current || !containerRef.current) return;
-    gsap.fromTo(
-      lineRef.current,
-      { scaleY: 0 },
-      {
-        scaleY: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 70%',
-          end: 'bottom 40%',
-          scrub: true,
-        },
-      }
-    );
-  }, { scope: containerRef });
+  const isInView = useInView(containerRef, { once: true, margin: '-10% 0px' });
 
   return (
     <div ref={containerRef} className="relative">
       <div className="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 bg-gold/30 hidden md:block" />
       <div
-        ref={lineRef}
         className="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 bg-gold origin-top hidden md:block"
-        style={{ transform: 'translateX(-50%) scaleY(0)' }}
+        style={{
+          transform: isInView ? 'translateX(-50%) scaleY(1)' : 'translateX(-50%) scaleY(0)',
+          transition: 'transform 1.5s cubic-bezier(0.16, 1, 0.3, 1)',
+        }}
       />
       <TimelineContent />
     </div>
@@ -189,7 +174,7 @@ function TimelineMilestone({
       } mb-12 md:mb-16`}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: 0.1, ease: easeSmooth }}
+      transition={{ duration: 0.7, type: 'spring', stiffness: 100, damping: 20, delay: 0.1 }}
     >
       {/* Dot on the line */}
       <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-2 z-10">
@@ -197,13 +182,13 @@ function TimelineMilestone({
           className="w-3 h-3 rounded-full bg-gold"
           initial={{ scale: 0 }}
           animate={isInView ? { scale: 1 } : {}}
-          transition={{ duration: 0.4, delay: 0.2, ease: easeSmooth }}
+          transition={{ duration: 0.4, type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
         />
       </div>
 
       {/* Content card */}
       <div
-        className={`md:w-[45%] ${isLeft ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'}`}
+        className={`md:w-[45%] glass-card p-6 ${isLeft ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'}`}
       >
         <span className="inline-block font-body text-sm font-bold text-gold bg-gold/10 px-3 py-1 rounded mb-3">
           {year}
@@ -499,7 +484,7 @@ export default function About() {
             {/* Right Column: Values Card (sticky) */}
             <div className="lg:sticky lg:top-[120px] self-start">
               <ScrollReveal delay={0.3} x={30}>
-                <div className="bg-white rounded-lg shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-6 lg:p-8">
+                <div className="glass-card p-6 lg:p-8">
                   <h3 className="font-body text-heading-lg font-bold text-forest mb-6">
                     Our Core Values
                   </h3>
@@ -511,9 +496,11 @@ export default function About() {
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.3 + i * 0.08, ease: easeSmooth }}
+                        transition={{ duration: 0.5, type: 'spring', stiffness: 100, damping: 20, delay: 0.3 + i * 0.08 }}
                       >
-                        <v.icon className={`w-6 h-6 ${v.color} shrink-0 mt-0.5`} />
+                        <div className={`w-10 h-10 rounded-xl ${v.color.replace('text-', 'bg-')}/10 flex items-center justify-center shrink-0`}>
+                          <v.icon className={`w-5 h-5 ${v.color}`} />
+                        </div>
                         <div>
                           <h4 className="font-body text-base font-semibold text-forest mb-1">
                             {v.name}
@@ -643,7 +630,17 @@ export default function About() {
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 max-w-[1100px] mx-auto mt-12">
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 max-w-[1100px] mx-auto mt-12"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                visible: {
+                  transition: { staggerChildren: 0.08, delayChildren: 0.2 },
+                },
+              }}
+            >
               {[
                 'To promote holistic mental wellness by addressing the emotional, psychological, social, spiritual, and behavioral well-being of individuals across all stages of life.',
                 'To prevent and reduce substance use disorders and behavioral addictions through education, awareness, early intervention, treatment support, and recovery programs.',
@@ -668,11 +665,11 @@ export default function About() {
               ].map((objective, index) => (
                 <motion.div
                   key={index}
+                  variants={{
+                    hidden: { opacity: 0, y: 10 },
+                    visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 20 } },
+                  }}
                   className="flex items-start gap-4 py-3"
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 + index * 0.03, ease: easeSmooth }}
                 >
                   <span className="font-display text-gold text-lg font-bold shrink-0 w-8">
                     {index + 1}.
@@ -682,7 +679,7 @@ export default function About() {
                   </p>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </ScrollReveal>
         </div>
       </section>

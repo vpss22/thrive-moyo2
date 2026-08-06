@@ -319,7 +319,7 @@ function DonateSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: easeDramatic }}
-          className="max-w-[600px] mx-auto bg-white rounded-xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-8 lg:p-10"
+          className="max-w-[600px] mx-auto glass-card p-8 lg:p-10"
         >
           {submitted ? (
             <div className="text-center py-8">
@@ -566,7 +566,7 @@ function VolunteerSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: easeDramatic, delay: 0.2 }}
-            className="bg-white rounded-xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-8 lg:p-10 h-fit"
+            className="glass-card p-8 lg:p-10 h-fit"
           >
             {formSubmitted ? (
               <div className="text-center py-8">
@@ -786,7 +786,7 @@ function PartnerSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: easeDramatic, delay: 0.2 }}
-            className="bg-white rounded-xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-8 lg:p-10 h-fit"
+            className="glass-card p-8 lg:p-10 h-fit"
           >
             {submitted ? (
               <div className="text-center py-8">

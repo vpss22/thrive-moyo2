@@ -12,7 +12,11 @@ const navLinks = [
   { label: 'Contact', href: '/contact' },
 ];
 
-const easeDramatic = [0.16, 1, 0.3, 1] as [number, number, number, number];
+const springConfig = {
+  type: 'spring' as const,
+  stiffness: 300,
+  damping: 30,
+};
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -47,17 +51,18 @@ export default function Navbar() {
 
   return (
     <>
-      <nav
+      <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-[rgba(250,247,242,0.95)] backdrop-blur-xl border-b border-forest/10 shadow-sm'
+            ? 'bg-[rgba(250,247,242,0.85)] backdrop-blur-xl border-b border-forest/10 shadow-glass'
             : 'bg-transparent border-b border-transparent'
         }`}
-        style={{ transitionTimingFunction: 'var(--ease-smooth)' }}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ...springConfig }}
       >
         <div className="container-main">
           <div className="flex items-center justify-between h-[72px] lg:h-[72px]">
-            {/* Logo */}
             <Link to="/" className="flex items-center shrink-0">
               <img
                 src="/logo.png"
@@ -66,7 +71,6 @@ export default function Navbar() {
               />
             </Link>
 
-            {/* Desktop Nav Links */}
             <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => (
                 <Link
@@ -92,7 +96,6 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Desktop CTA Buttons */}
             <div className="hidden lg:flex items-center gap-3">
               <Link
                 to="/get-involved"
@@ -122,7 +125,6 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className={`lg:hidden p-2 rounded transition-colors ${scrolled ? 'text-forest' : 'text-white'}`}
@@ -132,9 +134,8 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -151,7 +152,7 @@ export default function Navbar() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  transition={{ delay: i * 0.08, duration: 0.4, ease: easeDramatic }}
+                  transition={{ delay: i * 0.08, duration: 0.4, ...springConfig }}
                 >
                   <Link
                     to={link.href}
@@ -168,7 +169,7 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                transition={{ delay: 0.5, duration: 0.4, ease: easeDramatic }}
+                transition={{ delay: 0.5, duration: 0.4, ...springConfig }}
                 className="flex flex-col gap-3 mt-6 w-64"
               >
                 <Link

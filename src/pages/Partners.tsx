@@ -117,16 +117,16 @@ function ModelCard({ icon, iconBg, title, body, benefits, cta, index }: ModelCar
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.15, ease: easeDramatic }}
-      className="bg-white rounded-lg border border-forest/10 p-8 shadow-card hover:shadow-card-hover hover:-translate-y-1 transition-all duration-400"
+      transition={{ duration: 0.6, delay: index * 0.15, type: 'spring', stiffness: 100, damping: 20 }}
+      className="glass-card p-8 group"
     >
       <div
-        className="w-20 h-20 rounded-full flex items-center justify-center mb-6 transition-transform duration-300 hover:scale-110"
+        className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110"
         style={{ backgroundColor: iconBg }}
       >
         {icon}
       </div>
-      <h3 className="font-body font-bold text-heading-lg text-forest mb-3">{title}</h3>
+      <h3 className="font-body font-bold text-heading-md text-forest mb-3">{title}</h3>
       <p className="font-body text-body text-charcoal mb-4">{body}</p>
       <ul className="space-y-2 mb-5">
         {benefits.map((b) => (

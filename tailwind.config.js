@@ -104,6 +104,10 @@ module.exports = {
         btn: '0 4px 20px rgba(27,67,50,0.3)',
         'btn-gold': '0 4px 20px rgba(212,165,116,0.4)',
         'crisis': '0 4px 20px rgba(192,57,43,0.4)',
+        glass: '0 8px 32px rgba(0,0,0,0.06)',
+        'glass-hover': '0 12px 48px rgba(0,0,0,0.12)',
+        glow: '0 0 60px rgba(212,165,116,0.15)',
+        'glow-forest': '0 0 60px rgba(27,67,50,0.15)',
       },
       keyframes: {
         "accordion-down": {
@@ -130,6 +134,34 @@ module.exports = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(8px)" },
         },
+        "float": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-12px)" },
+        },
+        "pulse-soft": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.6" },
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        "fade-in-up": {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "fade-in-scale": {
+          "0%": { opacity: "0", transform: "scale(0.95)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        "slide-in-left": {
+          "0%": { opacity: "0", transform: "translateX(-30px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        "slide-in-right": {
+          "0%": { opacity: "0", transform: "translateX(30px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -138,6 +170,13 @@ module.exports = {
         "pulse-ring": "pulse-ring 2s ease-out infinite",
         "sway": "sway 3s ease-in-out infinite",
         "bounce-subtle": "bounce-subtle 2s ease-in-out infinite",
+        "float": "float 6s ease-in-out infinite",
+        "pulse-soft": "pulse-soft 3s ease-in-out infinite",
+        "shimmer": "shimmer 2s linear infinite",
+        "fade-in-up": "fade-in-up 0.6s var(--ease-dramatic) forwards",
+        "fade-in-scale": "fade-in-scale 0.5s var(--ease-spring) forwards",
+        "slide-in-left": "slide-in-left 0.6s var(--ease-dramatic) forwards",
+        "slide-in-right": "slide-in-right 0.6s var(--ease-dramatic) forwards",
       },
     },
   },

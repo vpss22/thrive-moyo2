@@ -261,8 +261,8 @@ function StatCard({ metric, index }: { metric: typeof metrics[0]; index: number 
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: easeDramatic }}
-      className="text-center p-6"
+      transition={{ duration: 0.6, delay: index * 0.1, type: 'spring', stiffness: 100, damping: 20 }}
+      className="glass-card p-6 text-center"
     >
       <div className="flex items-center justify-center gap-2 mb-2">
         <span className="font-display text-gold" style={{ fontSize: 'clamp(2rem, 3.5vw, 3rem)' }}>

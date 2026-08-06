@@ -288,7 +288,7 @@ function ContactFormSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: easeDramatic, delay: 0.1 }}
-              className="bg-white rounded-xl shadow-[0_4px_24px_rgba(0,0,0,0.06)] p-8 lg:p-10"
+              className="glass-card p-8 lg:p-10"
             >
               {submitted ? (
                 <div className="text-center py-8">

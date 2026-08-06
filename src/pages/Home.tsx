@@ -197,7 +197,7 @@ function HeroSection() {
       {/* Frame 1: The Crisis */}
       <div ref={frame1Ref} className="absolute inset-0 flex flex-col items-center justify-center px-6">
         <h1 className="font-display text-display-xl text-white text-center mb-6">
-          360° of Care for Every Person, Every Community.
+          360° of Care for Each and Every Person, Every Community.
         </h1>
         <p className="font-body text-body-lg text-white/85 text-center max-w-xl mb-12">
           From addiction rejuvination to mental health support, trauma counseling to crisis intervention, family support to community wellness.  Thrive Moyo Spring Foundation delivers comprehensive care across Kenya and beyond.
@@ -312,37 +312,36 @@ function MissionSection() {
 
   return (
     <section className="relative bg-cream py-24 lg:py-32 overflow-hidden">
-      {/* Subtle pattern overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
+      <div className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231B4332' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }}
       />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-forest/5 rounded-full blur-3xl" />
 
       <div ref={ref} className="container-main relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: easeDramatic }}
-          >
-            <span className="section-label justify-center mb-6">Our Mission</span>
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, type: 'spring', stiffness: 100, damping: 20 }}
+          className="max-w-3xl mx-auto text-center"
+        >
+          <span className="section-label justify-center mb-6">Our Mission</span>
 
           <motion.h2
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: easeDramatic, delay: 0.1 }}
+            transition={{ duration: 0.7, type: 'spring', stiffness: 100, damping: 20, delay: 0.1 }}
             className="font-display text-display-lg text-forest mb-8"
           >
-            We don't just address addiction. We sooth and  mend people, families, and communities.
+            We don't just address addiction. We soothe and mend people, families, and communities.
           </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease: easeDramatic, delay: 0.3 }}
+            transition={{ duration: 0.6, type: 'spring', stiffness: 100, damping: 20, delay: 0.3 }}
             className="font-body text-body-lg text-charcoal leading-relaxed max-w-2xl mx-auto mb-6"
           >
             Thrive Moyo Spring Foundation is a Kenya-based wellness organization delivering 360° of care, from prevention to dignity and hope, from crisis intervention to community empowerment, ensuring every person, every family, and every community has access to holistic mental wellness.
@@ -351,15 +350,12 @@ function MissionSection() {
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease: easeDramatic, delay: 0.5 }}
+            transition={{ duration: 0.6, type: 'spring', stiffness: 100, damping: 20, delay: 0.5 }}
             className="font-body text-base text-charcoal-light max-w-xl mx-auto mb-10"
           >
-            From the streets of Nairobi to refugee camps, from university campuses
-            to rural villages, we are closing the treatment gap, because every person
-            struggling deserves a path to recovery, dignity, and hope.
+            From the streets of Nairobi to refugee camps, from university campuses to rural villages, we are closing the treatment gap, because every person struggling deserves a path to recovery, dignity, and hope.
           </motion.p>
 
-          {/* Gold leaf swaying icon */}
           <motion.div
             animate={{ rotate: [-5, 5, -5] }}
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
@@ -367,7 +363,7 @@ function MissionSection() {
           >
             <TreePine className="w-8 h-8 text-gold" />
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -490,48 +486,61 @@ function PillarsSection() {
   const isInView = useInView(ref, { once: true, margin: '-15%' });
 
   return (
-    <section className="bg-cream-dark py-20 lg:py-24">
-      <div ref={ref} className="container-main">
-        <div className="text-center mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease: easeDramatic }}
-            className="section-label justify-center mb-6"
-          >
-            What We Do
-          </motion.span>
+    <section className="bg-cream-dark py-20 lg:py-28 relative overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/5 rounded-full blur-3xl" />
+
+      <div ref={ref} className="container-main relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, type: 'spring', stiffness: 100, damping: 20 }}
+          className="text-center mb-16"
+        >
+          <span className="section-label justify-center mb-6">What We Do</span>
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: easeDramatic, delay: 0.1 }}
+            transition={{ duration: 0.7, type: 'spring', stiffness: 100, damping: 20, delay: 0.1 }}
             className="font-display text-display-lg text-forest"
           >
             Six Pillars of Wellness
           </motion.h2>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1200px] mx-auto">
-          {pillars.map((pillar, i) => (
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1200px] mx-auto"
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={{
+            visible: {
+              transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+            },
+          }}
+        >
+          {pillars.map((pillar) => (
             <motion.div
               key={pillar.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, ease: easeDramatic, delay: 0.15 * (i + 1) }}
-              className={`bg-white rounded-lg border border-forest/10 shadow-card p-8 ${pillar.borderColor} border-l-[3px] transition-all duration-400 hover:-translate-y-1 hover:shadow-card-hover group`}
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 20 } },
+              }}
+              className={`glass-card p-8 ${pillar.borderColor} border-l-[3px] group`}
             >
-              <div className={`w-20 h-20 rounded-full ${pillar.iconBg} flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                <pillar.icon className={`w-10 h-10 ${pillar.iconColor}`} />
+              <div className={`w-16 h-16 rounded-2xl ${pillar.iconBg} flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500`}>
+                <pillar.icon className={`w-8 h-8 ${pillar.iconColor}`} />
               </div>
-              <h3 className="font-body text-heading-lg text-forest text-center mb-4">
+              <h3 className="font-body text-heading-md text-forest text-center mb-4">
                 {pillar.title}
               </h3>
-              <ul className="font-body text-base text-charcoal leading-relaxed text-left mb-4 list-disc pl-5 space-y-1">
+              <ul className="font-body text-sm text-charcoal leading-relaxed text-left mb-4 space-y-2">
                 {pillar.points.map((point) => (
-                  <li key={point}>{point}</li>
+                  <li key={point} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gold mt-2 shrink-0" />
+                    {point}
+                  </li>
                 ))}
               </ul>
-              <p className={`font-body text-base font-semibold ${pillar.statColor} text-center mb-4`}>
+              <p className={`font-body text-sm font-semibold ${pillar.statColor} text-center mb-4`}>
                 {pillar.stat}
               </p>
               <Link
@@ -543,7 +552,7 @@ function PillarsSection() {
               </Link>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -620,50 +629,56 @@ function StatisticsSection() {
 
   return (
     <section className="relative bg-forest-dark py-24 lg:py-32 overflow-hidden">
-      {/* Dot pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.05]"
+      <div className="absolute inset-0 opacity-[0.05]"
         style={{
           backgroundImage: `radial-gradient(circle, #D4A574 1px, transparent 1px)`,
           backgroundSize: '24px 24px',
         }}
       />
-      {/* Gradient overlay */}
-      <div
-        className="absolute inset-0"
+      <div className="absolute inset-0"
         style={{
           background: 'linear-gradient(180deg, rgba(13,40,24,0.95) 0%, rgba(13,40,24,0.98) 100%)',
         }}
       />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-gold/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-forest-light/10 rounded-full blur-3xl" />
 
       <div ref={ref} className="container-main relative z-10">
-        <div className="text-center mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="section-label justify-center mb-6"
-          >
-            The Crisis in Numbers
-          </motion.span>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, type: 'spring', stiffness: 100, damping: 20 }}
+          className="text-center mb-16"
+        >
+          <span className="section-label justify-center mb-6 text-gold/80">The Crisis in Numbers</span>
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.1 }}
+            transition={{ duration: 0.7, type: 'spring', stiffness: 100, damping: 20, delay: 0.1 }}
             className="font-display text-display-lg text-white"
           >
             A Global Emergency
           </motion.h2>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 max-w-[1000px] mx-auto">
-          {stats.map((stat, i) => (
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 max-w-[1000px] mx-auto"
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={{
+            visible: {
+              transition: { staggerChildren: 0.15, delayChildren: 0.3 },
+            },
+          }}
+        >
+          {stats.map((stat) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 + i * 0.3 }}
-              className="text-center"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 20 } },
+              }}
+              className="text-center glass p-6 rounded-2xl"
             >
               <AnimatedCounter
                 target={stat.number}
@@ -673,20 +688,17 @@ function StatisticsSection() {
               <div className="font-body text-lg font-semibold text-white mt-3">
                 {stat.label}
               </div>
-              <p className="font-body text-body-sm text-white/60 max-w-[240px] mx-auto mt-2">
+              <p className="font-body text-sm text-white/60 max-w-[240px] mx-auto mt-2">
                 {stat.desc}
               </p>
-              {i < stats.length - 1 && (
-                <div className="hidden lg:block absolute right-0 top-1/2 w-px h-16 bg-gold/20 -translate-y-1/2" />
-              )}
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 1.5 }}
+          transition={{ duration: 0.6, type: 'spring', stiffness: 100, damping: 20, delay: 1.2 }}
           className="text-center mt-12"
         >
           <Link to="/impact" className="btn-outline-white inline-flex">
@@ -782,21 +794,22 @@ function ProgramsSection() {
   const isInView = useInView(ref, { once: true, margin: '-15%' });
 
   return (
-    <section className="bg-cream py-20 lg:py-24">
-      <div ref={ref} className="container-main">
-        <div className="text-center mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease: easeDramatic }}
-            className="section-label justify-center mb-6"
-          >
-            Our Programs
-          </motion.span>
+    <section className="bg-cream py-20 lg:py-28 relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-72 h-72 bg-forest/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl" />
+
+      <div ref={ref} className="container-main relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, type: 'spring', stiffness: 100, damping: 20 }}
+          className="text-center mb-16"
+        >
+          <span className="section-label justify-center mb-6">Our Programs</span>
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: easeDramatic, delay: 0.1 }}
+            transition={{ duration: 0.7, type: 'spring', stiffness: 100, damping: 20, delay: 0.1 }}
             className="font-display text-display-lg text-forest mb-4"
           >
             360° of Care at Every Stage
@@ -804,39 +817,53 @@ function ProgramsSection() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease: easeDramatic, delay: 0.2 }}
+            transition={{ duration: 0.6, type: 'spring', stiffness: 100, damping: 20, delay: 0.2 }}
             className="font-body text-body-lg text-charcoal-light max-w-xl mx-auto"
           >
             From crisis intervention to long-term recovery, our six pillars address the full continuum of need. No challenge is beyond care.
           </motion.p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1200px] mx-auto">
-          {programs.map((program, i) => (
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1200px] mx-auto"
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={{
+            visible: {
+              transition: { staggerChildren: 0.12, delayChildren: 0.3 },
+            },
+          }}
+        >
+          {programs.map((program) => (
             <motion.div
               key={program.title}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, ease: easeDramatic, delay: 0.12 * (i + 1) }}
-              className="bg-white rounded-lg border border-forest/10 shadow-card overflow-hidden transition-all duration-400 hover:-translate-y-1 hover:shadow-card-hover group"
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 20 } },
+              }}
+              className="glass-card overflow-hidden group"
             >
-              <div className="aspect-[16/10] overflow-hidden">
+              <div className="aspect-[16/10] overflow-hidden relative">
                 <img
                   src={program.image}
                   alt={program.title}
-                  className="w-full h-full object-cover transition-transform duration-600 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-forest-dark/60 to-transparent" />
               </div>
-              <div className="p-6">
+              <div className="p-8">
                 <span className={`font-body text-label font-semibold uppercase tracking-wider ${program.tagColor}`}>
                   {program.tag}
                 </span>
-                <h3 className="font-body text-heading-lg text-forest mt-3 mb-3">
+                <h3 className="font-body text-heading-md text-forest mt-3 mb-4">
                   {program.title}
                 </h3>
-                <ul className="font-body text-base text-charcoal leading-relaxed mb-4 list-disc pl-5 space-y-1">
+                <ul className="font-body text-sm text-charcoal leading-relaxed mb-4 space-y-1">
                   {program.points.map((point) => (
-                    <li key={point}>{point}</li>
+                    <li key={point} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gold mt-2 shrink-0" />
+                      {point}
+                    </li>
                   ))}
                 </ul>
                 <Link
@@ -849,12 +876,12 @@ function ProgramsSection() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.6, type: 'spring', stiffness: 100, damping: 20, delay: 0.8 }}
           className="text-center mt-12"
         >
           <Link to="/programs" className="btn-primary inline-flex">
