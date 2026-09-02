@@ -766,10 +766,10 @@ export default function About() {
               delay={0.5}
             />
             <TeamMember
-              name="Wycliffe Bichage"
-              role="Finance & Operations Director"
+              name="Wycliff Bichang’a"
+              role="Certified Public Accountant, Finance Professional & Professional Leader"
               image="/team-wycliffe-bichage.jpg"
-              bio="Chartered accountant with 10 years in nonprofit financial management. Ensures every shilling and every dollar creates measurable impact across our global programs."
+              bio="Wycliff Bichang’a is a senior Kenyan finance professional, accounting practitioner, and ICPAK Council Member with over 19 years of experience in accounting, audit, taxation, financial advisory, and public finance. He is the Founder & Managing Partner of Cliff & Company and has been actively involved in professional development, tax policy, economic commentary, and advocacy for the accounting profession."
               delay={0.5}
             />
           </div>
