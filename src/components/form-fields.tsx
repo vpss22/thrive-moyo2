@@ -15,10 +15,10 @@ type BaseProps = {
 };
 
 const baseInput =
-  'w-full px-4 py-3 rounded-lg border bg-white/80 backdrop-blur-sm text-charcoal placeholder-charcoal-light/50 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold';
+  'w-full px-4 py-3 rounded-[14px] border bg-white text-ink placeholder-ink/40 font-body text-[0.95rem] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gold/40';
 
-const errorInput = 'border-crisis/60 focus:ring-crisis/30 focus:border-crisis';
-const okInput = 'border-forest/15 hover:border-forest/30';
+const errorInput = 'border-crisis/60 focus:ring-crisis/25 focus:border-crisis';
+const okInput = 'border-ink/15 hover:border-ink/25 focus:border-gold/70';
 
 export function FormField({
   label,
@@ -32,20 +32,20 @@ export function FormField({
     <div className="space-y-1.5">
       <label
         htmlFor={id}
-        className="block font-body text-sm font-medium text-charcoal"
+        className="block font-body text-[0.82rem] font-semibold text-ink"
       >
         {label}
-        {required && <span className="text-crisis ml-1" aria-hidden="true">*</span>}
+        {required && <span className="ml-1 text-crisis" aria-hidden="true">*</span>}
       </label>
       {children}
       {hint && !error && (
-        <p className="text-xs text-charcoal-light/70 font-body">{hint}</p>
+        <p className="font-body text-xs text-ink/50">{hint}</p>
       )}
       {error && (
         <p
           id={`${id}-error`}
           role="alert"
-          className="text-xs text-crisis font-body flex items-center gap-1"
+          className="flex items-center gap-1 font-body text-xs text-crisis"
         >
           <span aria-hidden="true">⚠</span>
           {error.message}
@@ -101,7 +101,7 @@ export const FormSelect = forwardRef<HTMLSelectElement, SelectProps>(
         id={id}
         aria-invalid={!!error}
         aria-describedby={error ? `${id}-error` : undefined}
-        className={`${baseInput} ${error ? errorInput : okInput} ${className} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%231B4332%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><polyline points=%226 9 12 15 18 9%22></polyline></svg>')] bg-[length:12px] bg-[right_1rem_center] bg-no-repeat pr-10`}
+        className={`${baseInput} ${error ? errorInput : okInput} ${className} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2310231C%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><polyline points=%226 9 12 15 18 9%22></polyline></svg>')] bg-[length:12px] bg-[right_1rem_center] bg-no-repeat pr-10`}
         {...props}
       >
         {children}
@@ -116,19 +116,20 @@ export function FormSuccess({ message, onReset }: { message: string; onReset?: (
   return (
     <div
       role="status"
-      className="rounded-xl border border-forest-light/30 bg-forest-light/10 p-6 text-center"
+      className="card-base p-7 text-center"
     >
-      <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-forest-light/20">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-forest/10">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2F6B4F" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <polyline points="20 6 9 17 4 12" />
         </svg>
       </div>
-      <h4 className="font-display text-xl text-forest-dark mb-2">Thank you!</h4>
-      <p className="font-body text-sm text-charcoal-light max-w-md mx-auto">{message}</p>
+      <h4 className="mb-2 font-display text-xl text-forest">Thank you</h4>
+      <p className="mx-auto max-w-md font-body text-sm leading-relaxed text-ink/60">{message}</p>
       {onReset && (
         <button
+          type="button"
           onClick={onReset}
-          className="mt-4 text-xs uppercase tracking-wider font-semibold text-gold hover:text-gold-light transition-colors"
+          className="mt-4 font-body text-[0.8rem] font-semibold text-forest underline decoration-gold/60 decoration-2 underline-offset-4 transition-colors hover:text-forest-light"
         >
           Submit another response →
         </button>
@@ -141,7 +142,7 @@ export function FormError({ message }: { message: string }) {
   return (
     <div
       role="alert"
-      className="rounded-xl border border-crisis/40 bg-crisis/10 p-4 text-sm text-crisis font-body"
+      className="rounded-[14px] border border-crisis/30 bg-crisis/[0.07] p-4 font-body text-sm text-crisis"
     >
       <strong className="font-semibold">Error:</strong> {message}
     </div>
@@ -160,25 +161,25 @@ type CheckboxProps = {
 export const FormCheckbox = forwardRef<HTMLInputElement, CheckboxProps & React.InputHTMLAttributes<HTMLInputElement>>(
   ({ id, label, description, error, required, className = '', ...props }, ref) => (
     <div className="space-y-1">
-      <label htmlFor={id} className="flex items-start gap-3 cursor-pointer group">
+      <label htmlFor={id} className="group flex cursor-pointer items-start gap-3">
         <input
           ref={ref}
           id={id}
           type="checkbox"
           aria-invalid={!!error}
-          className={`mt-1 h-4 w-4 shrink-0 rounded border-forest/30 text-forest focus:ring-gold/50 ${className}`}
+          className={`mt-1 h-4 w-4 shrink-0 rounded-[4px] border-ink/25 text-forest focus:ring-gold/40 ${className}`}
           {...props}
         />
-        <span className="text-sm font-body text-charcoal">
+        <span className="font-body text-sm text-ink">
           {label}
-          {required && <span className="text-crisis ml-1" aria-hidden="true">*</span>}
+          {required && <span className="ml-1 text-crisis" aria-hidden="true">*</span>}
           {description && (
-            <span className="block text-xs text-charcoal-light/70 mt-0.5">{description}</span>
+            <span className="mt-0.5 block text-xs text-ink/50">{description}</span>
           )}
         </span>
       </label>
       {error && (
-        <p role="alert" className="text-xs text-crisis font-body ml-7">
+        <p role="alert" className="ml-7 font-body text-xs text-crisis">
           {error.message}
         </p>
       )}
@@ -205,11 +206,11 @@ export function FormRadioGroup({
 }: RadioGroupProps) {
   return (
     <div className="space-y-2">
-      <span className="block font-body text-sm font-medium text-charcoal">
+      <span className="block font-body text-[0.82rem] font-semibold text-ink">
         {label}
-        {required && <span className="text-crisis ml-1" aria-hidden="true">*</span>}
+        {required && <span className="ml-1 text-crisis" aria-hidden="true">*</span>}
       </span>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
         {options.map((opt) => (
           <label
             key={opt.value}
@@ -223,11 +224,11 @@ export function FormRadioGroup({
               name={id}
               className="peer sr-only"
             />
-            <div className="rounded-lg border border-forest/15 bg-white/70 px-3 py-2.5 text-center font-body text-sm text-charcoal transition-all hover:border-forest/30 peer-checked:border-gold peer-checked:bg-gold/10 peer-checked:text-forest-dark peer-focus-visible:ring-2 peer-focus-visible:ring-gold/50">
+            <div className="rounded-[14px] border border-ink/15 bg-white px-3 py-2.5 text-center font-body text-sm text-ink transition-colors hover:border-ink/30 peer-checked:border-gold peer-checked:bg-gold/10 peer-checked:font-semibold peer-checked:text-forest peer-focus-visible:ring-2 peer-focus-visible:ring-gold/50">
               {opt.label}
             </div>
             {opt.description && (
-              <span className="block text-xs text-charcoal-light/70 mt-1 text-center">
+              <span className="mt-1 block text-center text-xs text-ink/50">
                 {opt.description}
               </span>
             )}
@@ -235,7 +236,7 @@ export function FormRadioGroup({
         ))}
       </div>
       {error && (
-        <p role="alert" className="text-xs text-crisis font-body">
+        <p role="alert" className="font-body text-xs text-crisis">
           {error.message}
         </p>
       )}

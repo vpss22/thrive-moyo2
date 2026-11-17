@@ -6,12 +6,11 @@ import {
   Instagram, Linkedin, Youtube, ExternalLink,
   CheckCircle2, PhoneCall, Users, HeartPulse, Newspaper, Handshake
 } from 'lucide-react';
+import { PageHero, Reveal, Stagger, StaggerItem } from '@/components/primitives';
 
-/* ─────────────── animation constants ─────────────── */
-const easeDramatic = [0.16, 1, 0.3, 1] as [number, number, number, number];
-const staggerContainer = { visible: { transition: { staggerChildren: 0.1 } } };
-const staggerItem = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeDramatic } } };
-const staggerX = { hidden: { opacity: 0, x: 20 }, visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: easeDramatic } } };
+/* ─────────────── shared field styling ─────────────── */
+const fieldClass =
+  'w-full rounded-lg border border-ink/15 bg-white px-4 py-3.5 font-body text-[0.92rem] text-ink placeholder:text-ink/55 outline-none transition-[border-color,box-shadow] duration-200 focus:border-forest-light focus:ring-2 focus:ring-gold/35';
 
 /* ─────────────── FAQ data ─────────────── */
 const FAQ_ITEMS = [
@@ -93,42 +92,36 @@ const SOCIAL_LINKS = [
 const EMERGENCY_RESOURCES = [
   {
     icon: PhoneCall,
-    color: 'text-terracotta',
     name: 'Kenya Emergency Services',
     number: '999 / 112',
     description: 'For life-threatening emergencies',
   },
   {
     icon: HeartPulse,
-    color: 'text-sage',
     name: 'NACADA Helpline',
     number: '1192',
     description: 'National drug abuse helpline',
   },
   {
     icon: Users,
-    color: 'text-gold',
     name: 'Befrienders Kenya',
     number: '+254 722 178 177',
     description: 'Suicide prevention and emotional support',
   },
   {
     icon: PhoneCall,
-    color: 'text-terracotta',
     name: 'Gender-Based Violence (GVRC)',
     number: '1195',
     description: 'GBV crisis response and support',
   },
   {
     icon: Users,
-    color: 'text-forest-light',
     name: 'Childline Kenya',
     number: '116',
     description: 'Child protection and support',
   },
   {
     icon: HeartPulse,
-    color: 'text-sage',
     name: 'UNHCR Helpline (Refugees)',
     number: '+254 20 422 2000',
     description: 'Refugee support and assistance',
@@ -141,10 +134,8 @@ export default function Contact() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <CrisisBanner />
       <HeroSection />
       <ContactFormSection />
       <OfficeLocations />
@@ -155,103 +146,68 @@ export default function Contact() {
   );
 }
 
-/* ═══════════════ SECTION 1: CRISIS BANNER ═══════════════ */
-function CrisisBanner() {
-  return (
-    <motion.div
-      initial={{ y: '-100%' }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: easeDramatic }}
-      className="bg-crisis py-6 px-6 relative z-10"
-    >
-      <div className="container-main text-center max-w-[900px] mx-auto">
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <AlertTriangle className="w-5 h-5 text-white" />
-          <span className="font-body font-bold text-lg text-white">
-            Thrive Moyo Spring Foundation Crisis Hotline: Available 24/7 Across Kenya
-          </span>
-        </div>
-
-        <div className="flex flex-wrap items-center justify-center gap-6">
-          <div className="text-center">
-            <a href="tel:999" className="font-display text-[2rem] text-white hover:text-gold transition-colors block">
-              999
-            </a>
-            <span className="font-body font-medium text-label text-white/70 uppercase">Kenya Emergency</span>
-          </div>
-          <div className="w-px h-10 bg-white/30" />
-          <div className="text-center">
-            <a href="tel:112" className="font-display text-[2rem] text-white hover:text-gold transition-colors block">
-              112
-            </a>
-            <span className="font-body font-medium text-label text-white/70 uppercase">Pan-African Emergency</span>
-          </div>
-          <div className="w-px h-10 bg-white/30" />
-          <div className="text-center">
-            <a href="tel:+254719288177" className="font-display text-[1.5rem] text-white hover:text-gold transition-colors block">
-              +254 719 288 177
-            </a>
-            <span className="font-body font-medium text-label text-white/70 uppercase">Thrive Moyo Spring Foundation Hotline</span>
-          </div>
-        </div>
-
-        <p className="text-body-sm text-white/70 mt-3">
-          Our crisis hotline is available 24 hours a day, 7 days a week, across Kenya. All calls are confidential.
-        </p>
-      </div>
-    </motion.div>
-  );
-}
-
-/* ═══════════════ SECTION 2: HERO ═══════════════ */
+/* ═══════════════ SECTION 1: HERO + CRISIS ALERT ═══════════════ */
 function HeroSection() {
   return (
-    <section
-      className="relative min-h-[50dvh] flex items-center justify-center overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #0D2818 0%, #1B4332 100%)' }}
-    >
-      {/* Dots pattern overlay */}
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `radial-gradient(circle, #D4A574 1px, transparent 1px)`,
-          backgroundSize: '24px 24px',
-        }}
+    <>
+      <PageHero
+        label="Contact us"
+        title="We're Here to Listen, Anywhere in the World"
+        subtitle="Whether you need help, want to help, or just have a question, reach out. Every message is read by a real person, and we respond within one business day. No concern is too small. Lydia Obara and the team are here for you."
+        bgImage="/program-rehab.jpg"
       />
 
-      <div className="relative z-10 text-center px-6 max-w-[700px] mx-auto pt-[80px] pb-[60px]">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="section-label justify-center mb-6"
-        >
-          <span>CONTACT US</span>
-        </motion.div>
+      {/* Compact crisis alert strip, tucked just under the header */}
+      <section className="bg-cream pb-4 pt-6 lg:pt-8">
+        <div className="container-main">
+          <Reveal>
+            <div className="rounded-card border border-crisis/25 bg-white p-5 shadow-soft sm:p-6">
+              <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+                <div className="flex items-start gap-3.5">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-crisis/10 text-crisis">
+                    <AlertTriangle className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="font-body text-[0.92rem] font-bold leading-snug text-forest">
+                      Thrive Moyo Spring Foundation crisis hotline: available 24/7 across Kenya
+                    </p>
+                    <p className="mt-1 font-body text-[0.78rem] leading-[1.55] text-ink/55">
+                      Our crisis hotline is available 24 hours a day, 7 days a week, across Kenya. All
+                      calls are confidential.
+                    </p>
+                  </div>
+                </div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: easeDramatic }}
-          className="font-display text-display-lg text-white mb-6"
-        >
-          We&apos;re Here to Listen, Anywhere in the World
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-body-lg text-white/75"
-        >
-          Whether you need help, want to help, or just have a question, reach out. Every message is read by a real person, and we respond within one business day. No concern is too small. Lydia Obara and the team are here for you.
-        </motion.p>
-      </div>
-    </section>
+                <div className="flex flex-wrap gap-x-7 gap-y-3 lg:shrink-0">
+                  {[
+                    { label: 'Kenya emergency', value: '999', href: 'tel:999' },
+                    { label: 'Pan-African emergency', value: '112', href: 'tel:112' },
+                    {
+                      label: 'Thrive Moyo hotline',
+                      value: '+254 719 288 177',
+                      href: 'tel:+254719288177',
+                    },
+                  ].map((item) => (
+                    <a key={item.label} href={item.href} className="group block">
+                      <span className="block font-body text-[0.66rem] font-medium text-ink/50">
+                        {item.label}
+                      </span>
+                      <span className="mt-0.5 block font-display text-[1.1rem] leading-tight text-crisis transition-colors group-hover:text-forest">
+                        {item.value}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </>
   );
 }
 
-/* ═══════════════ SECTION 3: CONTACT FORM & INFO ═══════════════ */
+/* ═══════════════ SECTION 2: CONTACT FORM & INFO ═══════════════ */
 function ContactFormSection() {
   const [contactType, setContactType] = useState('general');
   const [submitted, setSubmitted] = useState(false);
@@ -269,248 +225,260 @@ function ContactFormSection() {
   };
 
   return (
-    <section className="bg-cream py-24">
+    <section className="bg-cream pb-[88px] pt-10 lg:pb-[120px] lg:pt-14">
       <div className="container-main">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          {/* Left.  Form (55%) */}
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+          {/* Left: Form */}
           <div className="lg:col-span-7">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: easeDramatic }}
-            >
-              <h2 className="font-display text-heading-lg text-forest mb-6">Send Us a Message</h2>
-            </motion.div>
+            <Reveal>
+              <h2 className="font-display text-display-md leading-[1.1] tracking-[-0.025em] text-forest">
+                Send Us a Message
+              </h2>
+            </Reveal>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: easeDramatic, delay: 0.1 }}
-              className="glass-card p-8 lg:p-10"
-            >
-              {submitted ? (
-                <div className="text-center py-8">
-                  <CheckCircle2 className="w-12 h-12 text-sage mx-auto mb-4" />
-                  <h3 className="font-display text-heading-lg text-forest mb-2">Thank you for reaching out.</h3>
-                  <p className="text-body text-charcoal-light">
-                    We&apos;ve received your message and will respond within one business day. If this is an emergency, please call our hotline:{" "}
-                    <a href="tel:+254719288177" className="text-forest-light hover:text-forest underline">
-                      +254 719 288 177
-                    </a>
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  {/* Contact type radio */}
-                  <div>
-                    <span className="text-body-sm text-charcoal font-body font-medium block mb-3">I am contacting as</span>
-                    <div className="flex flex-wrap gap-2">
-                      {CONTACT_TYPES.map((ct) => (
-                        <button
-                          key={ct.value}
-                          type="button"
-                          onClick={() => setContactType(ct.value)}
-                          className={`px-4 py-2.5 rounded-lg font-body text-sm font-medium transition-all duration-300 border ${
-                            contactType === ct.value
-                              ? 'bg-forest text-white border-forest'
-                              : 'bg-cream text-charcoal border-forest/15 hover:border-forest-light'
-                          }`}
-                        >
-                          {ct.label}
-                        </button>
-                      ))}
-                    </div>
-                    <p className="text-body-sm text-charcoal-light mt-2">
-                      {contactType === 'general' && 'Questions about our 360-degree wellness programs, services, or foundation'}
-                      {contactType === 'need-help' && "For yourself or someone you care about.  any type of addiction, mental health challenge, or crisis across all six pillars"}
-                      {contactType === 'clinical' && 'For hospitals, clinics, counselors, and wellness providers'}
-                      {contactType === 'community' && 'For churches, mosques, CBOs, schools, and community organizations partnering in 360-degree care'}
-                      {contactType === 'international' && 'For government agencies, foundations, and organizations supporting national wellness'}
-                      {contactType === 'media' && 'For journalists and media organizations'}
+            <Reveal delay={0.08}>
+              <div className="mt-6 rounded-card border border-ink/10 bg-white p-7 shadow-soft lg:p-9">
+                {submitted ? (
+                  <div className="py-8 text-center">
+                    <CheckCircle2 className="mx-auto mb-4 h-12 w-12 text-forest-light" aria-hidden="true" />
+                    <h3 className="font-display text-heading-lg text-forest">Thank you for reaching out.</h3>
+                    <p className="mt-2 font-body text-[0.92rem] leading-[1.7] text-ink/65">
+                      We&apos;ve received your message and will respond within one business day. If this is
+                      an emergency, please call our hotline:{' '}
+                      <a href="tel:+254719288177" className="font-semibold text-forest underline decoration-gold/60 underline-offset-2 hover:text-forest-light">
+                        +254 719 288 177
+                      </a>
                     </p>
                   </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    {/* Contact type radio */}
+                    <div>
+                      <span className="mb-3 block font-body text-[0.8rem] font-medium text-ink/70">
+                        I am contacting as
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {CONTACT_TYPES.map((ct) => {
+                          const isActive = contactType === ct.value;
+                          return (
+                            <button
+                              key={ct.value}
+                              type="button"
+                              onClick={() => setContactType(ct.value)}
+                              aria-pressed={isActive}
+                              className={`rounded-full px-3.5 py-2 font-body text-[0.76rem] font-semibold transition-colors duration-200 ${
+                                isActive
+                                  ? 'bg-forest text-cream'
+                                  : 'border border-ink/15 bg-cream/60 text-ink/65 hover:border-forest/30 hover:text-forest'
+                              }`}
+                            >
+                              {ct.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                      <p className="mt-2.5 font-body text-[0.78rem] leading-[1.6] text-ink/50">
+                        {contactType === 'general' && 'Questions about our 360-degree wellness programs, services, or foundation'}
+                        {contactType === 'need-help' && "For yourself or someone you care about.  any type of addiction, mental health challenge, or crisis across all six pillars"}
+                        {contactType === 'clinical' && 'For hospitals, clinics, counselors, and wellness providers'}
+                        {contactType === 'community' && 'For churches, mosques, CBOs, schools, and community organizations partnering in 360-degree care'}
+                        {contactType === 'international' && 'For government agencies, foundations, and organizations supporting national wellness'}
+                        {contactType === 'media' && 'For journalists and media organizations'}
+                      </p>
+                    </div>
 
-                  <input
-                    type="text"
-                    placeholder="Your full name"
-                    required
-                    value={form.fullName}
-                    onChange={e => update('fullName', e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-lg border border-forest/15 font-body text-charcoal placeholder:text-charcoal-light/60 focus:border-forest-light focus:shadow-[0_0_0_3px_rgba(45,106,79,0.1)] outline-none transition-all"
-                  />
-                  <input
-                    type="email"
-                    placeholder="your@email.com"
-                    required
-                    value={form.email}
-                    onChange={e => update('email', e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-lg border border-forest/15 font-body text-charcoal placeholder:text-charcoal-light/60 focus:border-forest-light focus:shadow-[0_0_0_3px_rgba(45,106,79,0.1)] outline-none transition-all"
-                  />
-                  <input
-                    type="tel"
-                    placeholder="+254 700 000 000"
-                    value={form.phone}
-                    onChange={e => update('phone', e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-lg border border-forest/15 font-body text-charcoal placeholder:text-charcoal-light/60 focus:border-forest-light focus:shadow-[0_0_0_3px_rgba(45,106,79,0.1)] outline-none transition-all"
-                  />
-                  <select
-                    required
-                    value={form.subject}
-                    onChange={e => update('subject', e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-lg border border-forest/15 font-body text-charcoal focus:border-forest-light focus:shadow-[0_0_0_3px_rgba(45,106,79,0.1)] outline-none transition-all bg-white"
-                  >
-                    <option value="">Select a subject</option>
-                    {SUBJECT_OPTIONS.map((opt) => (
-                      <option key={opt} value={opt}>{opt}</option>
-                    ))}
-                  </select>
-                  <textarea
-                    placeholder="Tell us how we can help..."
-                    rows={5}
-                    required
-                    value={form.message}
-                    onChange={e => update('message', e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-lg border border-forest/15 font-body text-charcoal placeholder:text-charcoal-light/60 focus:border-forest-light focus:shadow-[0_0_0_3px_rgba(45,106,79,0.1)] outline-none transition-all resize-none min-h-[140px]"
-                  />
-                  <select
-                    value={form.hearAbout}
-                    onChange={e => update('hearAbout', e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-lg border border-forest/15 font-body text-charcoal focus:border-forest-light focus:shadow-[0_0_0_3px_rgba(45,106,79,0.1)] outline-none transition-all bg-white"
-                  >
-                    <option value="">How did you hear about us? (optional)</option>
-                    {HEAR_ABOUT_OPTIONS.map((opt) => (
-                      <option key={opt} value={opt}>{opt}</option>
-                    ))}
-                  </select>
+                    <input
+                      type="text"
+                      aria-label="Your full name"
+                      placeholder="Your full name"
+                      required
+                      value={form.fullName}
+                      onChange={e => update('fullName', e.target.value)}
+                      className={fieldClass}
+                    />
+                    <input
+                      type="email"
+                      aria-label="Your email address"
+                      placeholder="your@email.com"
+                      required
+                      value={form.email}
+                      onChange={e => update('email', e.target.value)}
+                      className={fieldClass}
+                    />
+                    <input
+                      type="tel"
+                      aria-label="Your phone number (optional)"
+                      placeholder="+254 700 000 000"
+                      value={form.phone}
+                      onChange={e => update('phone', e.target.value)}
+                      className={fieldClass}
+                    />
+                    <select
+                      aria-label="Subject"
+                      required
+                      value={form.subject}
+                      onChange={e => update('subject', e.target.value)}
+                      className={fieldClass}
+                    >
+                      <option value="">Select a subject</option>
+                      {SUBJECT_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))}
+                    </select>
+                    <textarea
+                      aria-label="Your message"
+                      placeholder="Tell us how we can help..."
+                      rows={5}
+                      required
+                      value={form.message}
+                      onChange={e => update('message', e.target.value)}
+                      className={`${fieldClass} min-h-[140px] resize-none`}
+                    />
+                    <select
+                      aria-label="How did you hear about us? (optional)"
+                      value={form.hearAbout}
+                      onChange={e => update('hearAbout', e.target.value)}
+                      className={fieldClass}
+                    >
+                      <option value="">How did you hear about us? (optional)</option>
+                      {HEAR_ABOUT_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt}>{opt}</option>
+                      ))}
+                    </select>
 
-                  <button type="submit" className="btn-primary w-full py-4 mt-2">
-                    Send Message
-                  </button>
-                </form>
-              )}
-            </motion.div>
+                    <button type="submit" className="btn-primary mt-2 w-full">
+                      Send message
+                    </button>
+                  </form>
+                )}
+              </div>
+            </Reveal>
           </div>
 
-          {/* Right.  Contact Info (45%) */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-            className="lg:col-span-5"
-          >
-            <motion.h2 variants={staggerX} className="font-display text-heading-lg text-forest mb-6">
-              Get in Touch
-            </motion.h2>
+          {/* Right: Contact Info */}
+          <div className="lg:col-span-5">
+            <Reveal delay={0.06}>
+              <h2 className="font-display text-display-md leading-[1.1] tracking-[-0.025em] text-forest">
+                Get in Touch
+              </h2>
+            </Reveal>
 
-            <div className="space-y-8">
+            <Stagger className="mt-6 rounded-card border border-ink/10 bg-white p-7 shadow-soft">
               {/* General Inquiries */}
-              <motion.div variants={staggerX} className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-forest/8 flex items-center justify-center shrink-0">
-                  <Mail className="w-5 h-5 text-gold" />
+              <StaggerItem>
+                <div className="flex gap-4 border-b border-ink/[0.08] pb-5">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gold/15 text-clay">
+                    <Mail className="h-4 w-4" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h4 className="font-body text-[0.9rem] font-semibold text-forest">General Inquiries</h4>
+                    <a href="mailto:info@thrivemoyospring.org" className="mt-0.5 block font-body text-[0.86rem] text-forest-light transition-colors hover:text-forest">
+                      info@thrivemoyospring.org
+                    </a>
+                    <p className="mt-0.5 font-body text-[0.76rem] text-ink/50">Monday–Friday, 8:00 AM – 5:00 PM EAT</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-body font-semibold text-base text-forest">General Inquiries</h4>
-                  <a href="mailto:info@thrivemoyospring.org" className="text-body text-forest-light hover:text-forest transition-colors block">
-                    info@thrivemoyospring.org
-                  </a>
-                  <p className="text-body-sm text-charcoal-light">Monday–Friday, 8:00 AM – 5:00 PM EAT</p>
-                </div>
-              </motion.div>
+              </StaggerItem>
 
               {/* Crisis Hotline */}
-              <motion.div variants={staggerX} className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-terracotta/10 flex items-center justify-center shrink-0">
-                  <Phone className="w-5 h-5 text-terracotta" />
+              <StaggerItem>
+                <div className="flex gap-4 border-b border-ink/[0.08] py-5">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-crisis/10 text-crisis">
+                    <Phone className="h-4 w-4" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h4 className="font-body text-[0.9rem] font-semibold text-forest">24/7 Crisis Hotline</h4>
+                    <a href="tel:+254719288177" className="mt-0.5 block font-body text-[0.86rem] font-semibold text-crisis transition-colors hover:text-forest">
+                      +254 719 288 177
+                    </a>
+                    <p className="mt-0.5 font-body text-[0.76rem] text-ink/50">Available 24 hours, 7 days a week, globally</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-body font-semibold text-base text-forest">24/7 Crisis Hotline</h4>
-                  <a href="tel:+254719288177" className="text-body text-terracotta hover:text-crisis transition-colors block">
-                    +254 719 288 177
-                  </a>
-                  <p className="text-body-sm text-charcoal-light">Available 24 hours, 7 days a week, globally</p>
-                </div>
-              </motion.div>
+              </StaggerItem>
 
               {/* Partnerships */}
-              <motion.div variants={staggerX} className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center shrink-0">
-                  <Handshake className="w-5 h-5 text-sage" />
+              <StaggerItem>
+                <div className="flex gap-4 border-b border-ink/[0.08] py-5">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sage/20 text-forest">
+                    <Handshake className="h-4 w-4" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h4 className="font-body text-[0.9rem] font-semibold text-forest">Partnerships</h4>
+                    <a href="mailto:partnerships@thrivemoyospring.org" className="mt-0.5 block font-body text-[0.86rem] text-forest-light transition-colors hover:text-forest">
+                      partnerships@thrivemoyospring.org
+                    </a>
+                    <p className="mt-0.5 font-body text-[0.76rem] text-ink/50">+254 719 288 178</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-body font-semibold text-base text-forest">Partnerships</h4>
-                  <a href="mailto:partnerships@thrivemoyospring.org" className="text-body text-forest-light hover:text-forest transition-colors block">
-                    partnerships@thrivemoyospring.org
-                  </a>
-                  <p className="text-body-sm text-charcoal-light">+254 719 288 178</p>
-                </div>
-              </motion.div>
+              </StaggerItem>
 
               {/* Media */}
-              <motion.div variants={staggerX} className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-forest/8 flex items-center justify-center shrink-0">
-                  <Newspaper className="w-5 h-5 text-forest-light" />
+              <StaggerItem>
+                <div className="flex gap-4 pt-5">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-forest/[0.06] text-forest">
+                    <Newspaper className="h-4 w-4" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h4 className="font-body text-[0.9rem] font-semibold text-forest">Media & Press</h4>
+                    <a href="mailto:media@thrivemoyospring.org" className="mt-0.5 block font-body text-[0.86rem] text-forest-light transition-colors hover:text-forest">
+                      media@thrivemoyospring.org
+                    </a>
+                    <p className="mt-0.5 font-body text-[0.76rem] text-ink/50">+254 719 288 179</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-body font-semibold text-base text-forest">Media & Press</h4>
-                  <a href="mailto:media@thrivemoyospring.org" className="text-body text-forest-light hover:text-forest transition-colors block">
-                    media@thrivemoyospring.org
-                  </a>
-                  <p className="text-body-sm text-charcoal-light">+254 719 288 179</p>
-                </div>
-              </motion.div>
-            </div>
+              </StaggerItem>
+            </Stagger>
 
             {/* Social media */}
-            <motion.div variants={staggerX} className="mt-10">
-              <h4 className="font-body font-semibold text-base text-forest mb-3">Follow Us</h4>
-              <div className="flex gap-3">
-                {SOCIAL_LINKS.map((s) => {
-                  const Icon = s.icon;
-                  return (
-                    <a
-                      key={s.label}
-                      href={s.href}
-                      aria-label={s.label}
-                      className="w-10 h-10 rounded-full bg-forest/[0.08] flex items-center justify-center text-forest hover:bg-forest hover:text-white hover:scale-110 transition-all duration-300"
-                    >
-                      <Icon className="w-5 h-5" />
-                    </a>
-                  );
-                })}
+            <Reveal delay={0.12}>
+              <div className="mt-7">
+                <h4 className="mb-3 font-body text-[0.9rem] font-semibold text-forest">Follow Us</h4>
+                <div className="flex gap-2.5">
+                  {SOCIAL_LINKS.map((s) => {
+                    const Icon = s.icon;
+                    return (
+                      <a
+                        key={s.label}
+                        href={s.href}
+                        aria-label={s.label}
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/10 bg-white text-forest transition-colors duration-200 hover:border-forest hover:bg-forest hover:text-cream"
+                      >
+                        <Icon className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    );
+                  })}
+                </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-/* ═══════════════ SECTION 4: OFFICE LOCATIONS ═══════════════ */
+/* ═══════════════ SECTION 3: OFFICE LOCATIONS ═══════════════ */
 function OfficeLocations() {
   const locations = [
     {
-      tag: 'HEADQUARTERS',
-      tagColor: 'text-gold',
+      tag: 'Headquarters',
+      tagTone: 'bg-gold/15 text-forest',
       name: 'Nairobi',
       address: 'Ngong Road Plaza, Ngong Road, Nairobi, Kenya',
       phone: '+254 719 288 177',
-      image: '/contact-office.jpg',
+      image: '/program-rehab.jpg',
     },
     {
-      tag: 'COAST REGION',
-      tagColor: 'text-terracotta',
+      tag: 'Coast region',
+      tagTone: 'bg-terracotta/10 text-clay',
       name: 'Mombasa',
       address: 'Moi Avenue Tower, Moi Avenue, Mombasa, Kenya',
       phone: '+254 719 288 180',
       image: undefined,
     },
     {
-      tag: 'WESTERN REGION',
-      tagColor: 'text-sage',
+      tag: 'Western region',
+      tagTone: 'bg-sage/20 text-forest',
       name: 'Kisumu',
       address: 'Oginga Odinga Street, Suite 4B, Kisumu, Kenya',
       phone: '+254 719 288 181',
@@ -519,226 +487,211 @@ function OfficeLocations() {
   ];
 
   return (
-    <section className="bg-cream-dark py-24">
+    <section className="bg-cream-dark section-py">
       <div className="container-main">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-          className="text-center mb-8"
-        >
-          <motion.div variants={staggerItem} className="section-label justify-center mb-4">
-            <span>FIND US</span>
-          </motion.div>
-          <motion.h2 variants={staggerItem} className="font-display text-display-md text-forest">
-            Our Offices
-          </motion.h2>
-        </motion.div>
+        <div className="mx-auto mb-10 max-w-2xl text-center">
+          <Reveal>
+            <span className="eyebrow justify-center">Find us</span>
+          </Reveal>
+          <Reveal delay={0.06}>
+            <h2 className="mt-5 font-display text-display-md leading-[1.1] tracking-[-0.025em] text-forest">
+              Our Offices
+            </h2>
+          </Reveal>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1100px] mx-auto"
-        >
-          {locations.map((loc, i) => (
-            <motion.div
-              key={i}
-              variants={staggerItem}
-              className="bg-white rounded-lg overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.04)] border border-forest/[0.08] transition-all duration-400 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] hover:border-gold/30"
-            >
-              {loc.image ? (
-                <div className="aspect-[16/10] overflow-hidden">
-                  <img
-                    src={loc.image}
-                    alt={`${loc.name} office`}
-                    className="w-full h-full object-cover transition-transform duration-600 hover:scale-105"
-                  />
+        <Stagger className="mx-auto grid max-w-[1100px] grid-cols-1 gap-5 md:grid-cols-3">
+          {locations.map((loc) => (
+            <StaggerItem key={loc.name}>
+              <article className="card-base h-full overflow-hidden">
+                {loc.image ? (
+                  <div className="aspect-[16/10] overflow-hidden bg-cream-dark">
+                    <img
+                      src={loc.image}
+                      alt={`${loc.name} office`}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-[450ms] ease-editorial hover:scale-[1.03]"
+                    />
+                  </div>
+                ) : (
+                  <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden bg-forest-deep">
+                    <span aria-hidden="true" className="absolute h-44 w-44 rounded-full border border-cream/10" />
+                    <span aria-hidden="true" className="absolute h-64 w-64 rounded-full border border-cream/[0.06]" />
+                    <MapPin className="relative h-9 w-9 text-gold/75" aria-hidden="true" />
+                    <span aria-hidden="true" className="absolute bottom-3 right-5 font-display text-[2.4rem] italic leading-none text-cream/[0.08]">
+                      {loc.name}
+                    </span>
+                  </div>
+                )}
+                <div className="p-6">
+                  <span className={`inline-flex rounded-full px-2.5 py-1 font-body text-[0.66rem] font-semibold ${loc.tagTone}`}>
+                    {loc.tag}
+                  </span>
+                  <h3 className="mt-3 font-display text-heading-lg leading-[1.2] tracking-[-0.02em] text-forest">
+                    {loc.name}
+                  </h3>
+                  <p className="mt-1.5 font-body text-[0.86rem] leading-[1.6] text-ink/60">{loc.address}</p>
+                  <a href={`tel:${loc.phone.replace(/\s/g, '')}`} className="mt-1 block font-body text-[0.86rem] text-forest-light transition-colors hover:text-forest">
+                    {loc.phone}
+                  </a>
+                  <p className="mt-1 font-body text-[0.76rem] text-ink/45">Mon–Fri, 8:00 AM – 5:00 PM EAT</p>
+                  <a
+                    href="#"
+                    onClick={e => e.preventDefault()}
+                    className="mt-4 inline-flex items-center gap-1.5 font-body text-[0.8rem] font-semibold text-forest transition-colors hover:text-forest-light"
+                  >
+                    View on Google Maps
+                    <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                  </a>
                 </div>
-              ) : (
-                <div className="aspect-[16/10] bg-forest/5 flex items-center justify-center">
-                  <MapPin className="w-10 h-10 text-forest/20" />
-                </div>
-              )}
-              <div className="p-6">
-                <span className={`font-body text-label font-semibold uppercase tracking-widest ${loc.tagColor}`}>
-                  {loc.tag}
-                </span>
-                <h3 className="font-display text-heading-lg text-forest mt-2 mb-2">{loc.name}</h3>
-                <p className="text-body text-charcoal-light mb-1">{loc.address}</p>
-                <a href={`tel:${loc.phone.replace(/\s/g, '')}`} className="text-body text-forest-light hover:text-forest transition-colors block mb-1">
-                  {loc.phone}
-                </a>
-                <p className="text-body-sm text-charcoal-light mb-3">Mon–Fri, 8:00 AM – 5:00 PM EAT</p>
-                <a
-                  href="#"
-                  onClick={e => e.preventDefault()}
-                  className="inline-flex items-center gap-1 text-forest-light font-body font-medium text-sm hover:text-forest transition-colors"
-                >
-                  View on Google Maps
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </div>
-            </motion.div>
+              </article>
+            </StaggerItem>
           ))}
-        </motion.div>
+        </Stagger>
       </div>
     </section>
   );
 }
 
-/* ═══════════════ SECTION 5: FAQ ═══════════════ */
+/* ═══════════════ SECTION 4: FAQ ═══════════════ */
 function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="bg-cream py-24">
+    <section className="bg-cream section-py">
       <div className="container-main">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-          className="text-center mb-8"
-        >
-          <motion.div variants={staggerItem} className="section-label justify-center mb-4">
-            <span>FAQs: 360° OF CARE</span>
-          </motion.div>
-          <motion.h2 variants={staggerItem} className="font-display text-display-md text-forest">
-            Common Questions
-          </motion.h2>
-        </motion.div>
+        <div className="mx-auto mb-10 max-w-2xl text-center">
+          <Reveal>
+            <span className="eyebrow justify-center">FAQs: 360° of care</span>
+          </Reveal>
+          <Reveal delay={0.06}>
+            <h2 className="mt-5 font-display text-display-md leading-[1.1] tracking-[-0.025em] text-forest">
+              Common Questions
+            </h2>
+          </Reveal>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-          className="max-w-[800px] mx-auto"
-        >
+        <div className="mx-auto max-w-[800px] space-y-3">
           {FAQ_ITEMS.map((item, i) => {
             const isOpen = openIndex === i;
             return (
-              <motion.div
-                key={i}
-                variants={staggerItem}
-                className="border-b border-forest/10"
-              >
-                <button
-                  onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className="w-full flex items-center justify-between gap-4 py-6 text-left group"
-                >
-                  <span className="font-body font-semibold text-lg text-charcoal group-hover:text-forest transition-colors">
-                    {item.q}
-                  </span>
-                  <span
-                    className={`text-gold shrink-0 text-xl font-light transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
+              <Reveal key={i} delay={Math.min(i * 0.03, 0.15)}>
+                <div className="rounded-[22px] border border-ink/10 bg-white transition-colors duration-200 hover:border-gold/35">
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    className="group flex w-full items-center justify-between gap-4 p-5 text-left sm:p-6"
                   >
-                    +
-                  </span>
-                </button>
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: easeDramatic }}
-                      className="overflow-hidden"
+                    <span className="font-body text-[0.95rem] font-semibold leading-snug text-forest">
+                      {item.q}
+                    </span>
+                    <span
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-ink/10 text-[1.05rem] font-light text-clay transition-transform duration-200 ${
+                        isOpen ? 'rotate-45' : ''
+                      }`}
+                      aria-hidden="true"
                     >
-                      <p className="text-body text-charcoal-light pb-6 max-w-[90%]">
-                        {item.a}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
+                      +
+                    </span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.32, ease: [0.4, 0, 0.2, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <p className="px-5 pb-5 font-body text-[0.88rem] leading-[1.75] text-ink/65 sm:px-6 sm:pb-6">
+                          {item.a}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </Reveal>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
-/* ═══════════════ SECTION 6: EMERGENCY RESOURCES ═══════════════ */
+/* ═══════════════ SECTION 5: EMERGENCY RESOURCES ═══════════════ */
 function EmergencyResources() {
   return (
-    <section className="bg-forest-dark py-16">
+    <section className="bg-forest section-py">
       <div className="container-main">
-        <motion.h3
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="font-body font-semibold text-heading-md text-white text-center mb-8"
-        >
-          Other Emergency Resources
-        </motion.h3>
+        <Reveal>
+          <h3 className="text-center font-display text-display-md leading-[1.1] tracking-[-0.025em] text-cream">
+            Other Emergency Resources
+          </h3>
+        </Reveal>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1000px] mx-auto"
-        >
-          {EMERGENCY_RESOURCES.map((res, i) => {
+        <Stagger className="mx-auto mt-10 grid max-w-[1000px] grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {EMERGENCY_RESOURCES.map((res) => {
             const Icon = res.icon;
             return (
-              <motion.div
-                key={i}
-                variants={staggerItem}
-                className="text-center p-6"
-              >
-                <Icon className={`w-7 h-7 ${res.color} mx-auto mb-3`} />
-                <h4 className="font-body font-semibold text-base text-white mb-1">{res.name}</h4>
-                <a
-                  href={`tel:${res.number.replace(/\s*or\s*/g, '').replace(/\s/g, '')}`}
-                  className="font-display text-[1.5rem] text-gold hover:text-gold-light transition-colors block mb-1"
-                >
-                  {res.number}
-                </a>
-                <p className="text-body-sm text-white/60">{res.description}</p>
-              </motion.div>
+              <StaggerItem key={res.name}>
+                <div className="h-full rounded-card border border-white/15 bg-white/[0.06] p-6">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.08] text-gold">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <h4 className="mt-4 font-body text-[0.92rem] font-semibold text-cream">{res.name}</h4>
+                  <a
+                    href={`tel:${res.number.replace(/\s*or\s*/g, '').replace(/\s/g, '')}`}
+                    className="mt-1 block font-display text-[1.35rem] leading-tight text-gold transition-colors hover:text-gold-light"
+                  >
+                    {res.number}
+                  </a>
+                  <p className="mt-1 font-body text-[0.78rem] leading-[1.55] text-cream/55">{res.description}</p>
+                </div>
+              </StaggerItem>
             );
           })}
-        </motion.div>
+        </Stagger>
       </div>
     </section>
   );
 }
 
-/* ═══════════════ SECTION 7: FINAL CTA ═══════════════ */
+/* ═══════════════ SECTION 6: FINAL CTA ═══════════════ */
 function FinalCTA() {
   return (
-    <section className="bg-cream py-20">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8, ease: easeDramatic }}
-        className="container-main text-center"
-      >
-        <h2 className="font-display text-display-md text-forest mb-4">
-          You Don&apos;t Have to Face This Alone: 360° of Care for Every Person, Every Community.
-        </h2>
-        <p className="text-body-lg text-charcoal-light max-w-[560px] mx-auto mb-8">
-          Whether you&apos;re reaching out for yourself or someone you love, taking the first step is the hardest part. Lydia Obara and the team have helped thousands find their path to recovery through 360° of care across our six strategic pillars, and we can help you too.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <a href="tel:+254719288177" className="btn-crisis inline-flex items-center gap-2">
-            <Phone className="w-4 h-4" />
-            Call Our Hotline
-          </a>
-          <Link to="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="btn-primary inline-flex items-center gap-2">
-            <Mail className="w-4 h-4" />
-            Send a Message
-          </Link>
-        </div>
-      </motion.div>
+    <section className="bg-cream section-py">
+      <div className="container-main text-center">
+        <Reveal>
+          <h2 className="mx-auto max-w-3xl font-display text-display-md leading-[1.1] tracking-[-0.025em] text-forest">
+            You Don&apos;t Have to Face This Alone: 360° of Care for Every Person, Every Community.
+          </h2>
+        </Reveal>
+        <Reveal delay={0.06}>
+          <p className="mx-auto mt-4 max-w-[560px] font-body text-body-lg leading-[1.75] text-ink/65">
+            Whether you&apos;re reaching out for yourself or someone you love, taking the first step is the
+            hardest part. Lydia Obara and the team have helped thousands find their path to recovery
+            through 360° of care across our six strategic pillars, and we can help you too.
+          </p>
+        </Reveal>
+        <Reveal delay={0.12}>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <a href="tel:+254719288177" className="btn-crisis inline-flex items-center gap-2">
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              Call our hotline
+            </a>
+            <Link
+              to="#"
+              onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              className="btn-primary inline-flex items-center gap-2"
+            >
+              <Mail className="h-4 w-4" aria-hidden="true" />
+              Send a message
+            </Link>
+          </div>
+        </Reveal>
+      </div>
     </section>
   );
 }

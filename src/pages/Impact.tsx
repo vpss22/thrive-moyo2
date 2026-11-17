@@ -2,17 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router';
 import { TrendingUp, Download } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
-
-gsap.registerPlugin(ScrollTrigger);
-
-/* ------------------------------------------------------------------ */
-/*  Easing                                                             */
-/* ------------------------------------------------------------------ */
-const easeDramatic = [0.16, 1, 0.3, 1] as [number, number, number, number];
-const easeSmooth = [0.4, 0, 0.2, 1] as [number, number, number, number];
+import { PageHero, Reveal, Stagger, StaggerItem } from '@/components/primitives';
 
 /* ------------------------------------------------------------------ */
 /*  Count-up hook                                                      */
@@ -51,14 +41,14 @@ function useCountUp(end: number, duration = 2.5, startCounting = false) {
 /*  Data                                                               */
 /* ------------------------------------------------------------------ */
 const metrics = [
-  { label: 'People Reached', value: 2500, suffix: '+', context: 'Through community awareness and outreach' },
-  { label: 'Counseling Sessions', value: 400, suffix: '+', context: 'Supporting mental wellness' },
-  { label: 'Families Connected', value: 150, suffix: '+', context: 'Linked to recovery services' },
-  { label: 'Counties Reached', value: 15, suffix: '', context: 'Across Kenya' },
-  { label: 'Crisis Response', value: 24, suffix: '/7', context: 'Always available' },
-  { label: 'Strategic Pillars', value: 6, suffix: '', context: 'Comprehensive care framework' },
-  { label: 'Partner Organizations', value: 350, suffix: '+', context: 'Clinical, community, and government' },
-  { label: 'Community Partners', value: 280, suffix: '+', context: 'Churches, mosques, CBOs, and schools' },
+  { label: 'People reached', value: 2500, suffix: '+', context: 'Through community awareness and outreach' },
+  { label: 'Counseling sessions', value: 400, suffix: '+', context: 'Supporting mental wellness' },
+  { label: 'Families connected', value: 150, suffix: '+', context: 'Linked to recovery services' },
+  { label: 'Counties reached', value: 15, suffix: '', context: 'Across Kenya' },
+  { label: 'Crisis response', value: 24, suffix: '/7', context: 'Always available' },
+  { label: 'Strategic pillars', value: 6, suffix: '', context: 'Comprehensive care framework' },
+  { label: 'Partner organizations', value: 350, suffix: '+', context: 'Clinical, community, and government' },
+  { label: 'Community partners', value: 280, suffix: '+', context: 'Churches, mosques, CBOs, and schools' },
 ];
 
 const regions = [
@@ -165,72 +155,56 @@ const recognitionLogos = [
 /*  Kenya Map SVG                                                      */
 /* ------------------------------------------------------------------ */
 function KenyaMap() {
-  const mapRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(() => {
-    if (!mapRef.current) return;
-    gsap.fromTo(
-      mapRef.current,
-      { opacity: 0, scale: 0.95 },
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: mapRef.current,
-          start: 'top 80%',
-          once: true,
-        },
-      }
-    );
-  }, { scope: mapRef });
-
   return (
-    <div ref={mapRef} className="relative w-full max-h-[600px]">
-      <svg viewBox="0 0 400 520" className="w-full h-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div className="relative w-full">
+      <svg viewBox="0 0 400 520" className="h-auto w-full" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Simplified map of Kenya showing partner facility locations">
         {/* Kenya outline - simplified */}
         <path
           d="M120,20 L140,18 L160,22 L180,20 L200,25 L220,22 L240,28 L260,35 L280,40 L300,50 L320,55 L340,65 L350,80 L345,100 L340,120 L335,140 L330,160 L332,180 L328,200 L325,220 L320,240 L315,260 L310,280 L305,300 L300,320 L295,340 L290,360 L285,380 L280,400 L275,420 L270,440 L265,460 L260,480 L255,500 L240,505 L220,500 L200,495 L180,490 L160,485 L140,480 L130,470 L125,450 L120,430 L115,410 L110,390 L105,370 L100,350 L95,330 L90,310 L85,290 L80,270 L75,250 L70,230 L65,210 L60,190 L55,170 L50,150 L48,130 L50,110 L55,90 L60,70 L70,55 L85,40 L100,30 L120,20 Z"
-          fill="#1B4332"
-          stroke="#D4A574"
+          className="fill-forest stroke-gold"
           strokeWidth="1.5"
         />
         {/* Highlighted counties - dots for partner facilities */}
-        <circle cx="180" cy="180" r="5" fill="#D4A574" />
-        <circle cx="200" cy="200" r="4" fill="#D4A574" />
-        <circle cx="160" cy="220" r="4" fill="#D4A574" />
-        <circle cx="220" cy="160" r="4" fill="#D4A574" />
-        <circle cx="140" cy="260" r="4" fill="#D4A574" />
-        <circle cx="240" cy="240" r="4" fill="#D4A574" />
-        <circle cx="180" cy="300" r="4" fill="#D4A574" />
-        <circle cx="200" cy="340" r="4" fill="#D4A574" />
-        <circle cx="160" cy="360" r="3" fill="#D4A574" />
-        <circle cx="220" cy="380" r="3" fill="#D4A574" />
-        <circle cx="180" cy="420" r="3" fill="#D4A574" />
-        <circle cx="200" cy="440" r="3" fill="#D4A574" />
+        <circle cx="180" cy="180" r="5" className="fill-gold" />
+        <circle cx="200" cy="200" r="4" className="fill-gold" />
+        <circle cx="160" cy="220" r="4" className="fill-gold" />
+        <circle cx="220" cy="160" r="4" className="fill-gold" />
+        <circle cx="140" cy="260" r="4" className="fill-gold" />
+        <circle cx="240" cy="240" r="4" className="fill-gold" />
+        <circle cx="180" cy="300" r="4" className="fill-gold" />
+        <circle cx="200" cy="340" r="4" className="fill-gold" />
+        <circle cx="160" cy="360" r="3" className="fill-gold" />
+        <circle cx="220" cy="380" r="3" className="fill-gold" />
+        <circle cx="180" cy="420" r="3" className="fill-gold" />
+        <circle cx="200" cy="440" r="3" className="fill-gold" />
         {/* Nairobi highlight */}
-        <circle cx="180" cy="180" r="8" fill="none" stroke="#D4A574" strokeWidth="1.5" opacity="0.6">
+        <circle cx="180" cy="180" r="8" className="fill-none stroke-gold-light" strokeWidth="1.5" opacity="0.6">
           <animate attributeName="r" values="6;10;6" dur="3s" repeatCount="indefinite" />
           <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite" />
         </circle>
         {/* Mombasa highlight */}
-        <circle cx="320" cy="55" r="6" fill="none" stroke="#D4A574" strokeWidth="1.5" opacity="0.6">
+        <circle cx="320" cy="55" r="6" className="fill-none stroke-gold-light" strokeWidth="1.5" opacity="0.6">
           <animate attributeName="r" values="4;8;4" dur="3s" repeatCount="indefinite" />
           <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite" />
         </circle>
         {/* Labels */}
-        <text x="180" y="175" textAnchor="middle" fill="#D4A574" fontSize="8" fontFamily="Inter" fontWeight="600">Nairobi</text>
-        <text x="320" y="50" textAnchor="middle" fill="#D4A574" fontSize="7" fontFamily="Inter" fontWeight="600">Mombasa</text>
-        <text x="160" y="235" textAnchor="middle" fill="#D4A574" fontSize="7" fontFamily="Inter" fontWeight="500" opacity="0.8">Kisumu</text>
-        <text x="220" y="175" textAnchor="middle" fill="#D4A574" fontSize="7" fontFamily="Inter" fontWeight="500" opacity="0.8">Nakuru</text>
+        <text x="180" y="172" textAnchor="middle" className="fill-gold-light font-body" fontSize="8" fontWeight="600">Nairobi</text>
+        <text x="320" y="47" textAnchor="middle" className="fill-gold-light font-body" fontSize="7" fontWeight="600">Mombasa</text>
+        <text x="160" y="235" textAnchor="middle" className="fill-gold-light font-body" fontSize="7" fontWeight="500" opacity="0.8">Kisumu</text>
+        <text x="222" y="175" textAnchor="middle" className="fill-gold-light font-body" fontSize="7" fontWeight="500" opacity="0.8">Nakuru</text>
       </svg>
+      <div className="mt-4 flex items-center justify-center gap-2 border-t border-ink/10 pt-4">
+        <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true" />
+        <span className="font-body text-[0.72rem] font-medium text-ink/55">
+          Partner facility locations across Kenya
+        </span>
+      </div>
     </div>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/*  Stat Card (count-up)                                               */
+/*  Metric card (count-up)                                             */
 /* ------------------------------------------------------------------ */
 function StatCard({ metric, index }: { metric: typeof metrics[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -251,27 +225,26 @@ function StatCard({ metric, index }: { metric: typeof metrics[0]; index: number 
     return () => observer.disconnect();
   }, []);
 
-  const formattedCount = metric.value >= 1000
-    ? count.toLocaleString()
-    : count.toString();
+  const formattedCount = metric.value >= 1000 ? count.toLocaleString() : count.toString();
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, delay: index * 0.1, type: 'spring', stiffness: 100, damping: 20 }}
-      className="glass-card p-6 text-center"
+      transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.3), ease: [0.22, 1, 0.36, 1] }}
+      className="rounded-card border border-ink/10 bg-white p-6 shadow-soft transition-[transform,box-shadow,border-color] duration-300 ease-editorial hover:-translate-y-1 hover:border-gold/40 hover:shadow-lift"
     >
-      <div className="flex items-center justify-center gap-2 mb-2">
-        <span className="font-display text-gold" style={{ fontSize: 'clamp(2rem, 3.5vw, 3rem)' }}>
-          {formattedCount}{metric.suffix}
+      <div className="flex items-start justify-between gap-2">
+        <span className="font-display text-[2.1rem] leading-none tracking-[-0.025em] text-forest">
+          {formattedCount}
+          {metric.suffix}
         </span>
-        <TrendingUp className="w-4 h-4 text-sage" />
+        <TrendingUp className="mt-1 h-4 w-4 text-sage" aria-hidden="true" />
       </div>
-      <p className="font-body font-semibold text-forest mb-1">{metric.label}</p>
-      <p className="font-body text-body-sm text-charcoal-light max-w-[200px] mx-auto">{metric.context}</p>
+      <p className="mt-3 font-body text-[0.88rem] font-semibold leading-snug text-forest">{metric.label}</p>
+      <p className="mt-1 font-body text-[0.78rem] leading-[1.55] text-ink/55">{metric.context}</p>
     </motion.div>
   );
 }
@@ -298,12 +271,12 @@ function ProgressBar({ width, delay = 0 }: { width: string; delay?: number }) {
   }, [delay]);
 
   return (
-    <div ref={ref} className="w-full h-1 rounded-sm bg-forest/10 overflow-hidden">
+    <div ref={ref} className="h-1 w-full overflow-hidden rounded-full bg-forest/10">
       <motion.div
-        className="h-full rounded-sm bg-gold"
+        className="h-full rounded-full bg-gold"
         initial={{ width: '0%' }}
         animate={{ width: animated ? width : '0%' }}
-        transition={{ duration: 1, ease: easeDramatic }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       />
     </div>
   );
@@ -314,39 +287,42 @@ function ProgressBar({ width, delay = 0 }: { width: string; delay?: number }) {
 /* ------------------------------------------------------------------ */
 function StoryCard({ story }: { story: typeof stories[0] }) {
   return (
-    <motion.div
+    <motion.article
       layout
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.4, ease: easeSmooth }}
-      className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6 items-center"
+      exit={{ opacity: 0, y: 12 }}
+      transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+      className="grid grid-cols-1 items-center gap-6 rounded-card border border-ink/10 bg-white p-5 shadow-soft md:grid-cols-[220px_1fr] md:gap-8 md:p-6"
     >
-      <div className="overflow-hidden rounded-lg aspect-[3/4] md:aspect-[3/4]">
+      <div className="overflow-hidden rounded-[20px] bg-cream-dark">
         <img
           src={story.image}
           alt={story.name}
-          className="w-full h-full object-cover transition-transform duration-400 hover:scale-[1.03]"
+          className="aspect-[4/5] w-full object-cover transition-transform duration-[450ms] ease-editorial hover:scale-[1.03]"
           loading="lazy"
         />
       </div>
-      <div className="py-2">
-        <p className="font-display italic text-display-md text-charcoal mb-4" style={{ fontSize: 'clamp(1.25rem, 2vw, 1.75rem)' }}>
-          &ldquo;{story.quote}&rdquo;
-        </p>
-        <p className="font-body font-bold text-forest text-lg">{story.name}</p>
-        <p className="font-body text-body-sm text-charcoal-light mb-3">{story.details}</p>
-        <span className="inline-block px-3 py-1 rounded-full bg-forest-light/10 text-forest-light font-body text-xs font-semibold uppercase tracking-wider mb-3">
+      <div className="md:py-2">
+        <span className="inline-flex rounded-full bg-forest/[0.06] px-3 py-1 font-body text-[0.68rem] font-semibold tracking-[0.04em] text-forest-light">
           {story.tag}
         </span>
+        <p className="mt-4 font-display text-[1.2rem] leading-[1.5] tracking-[-0.015em] text-charcoal md:text-[1.4rem]">
+          &ldquo;{story.quote}&rdquo;
+        </p>
+        <p className="mt-4 font-body text-[0.95rem] font-bold text-forest">{story.name}</p>
+        <p className="mt-1 font-body text-[0.8rem] leading-[1.6] text-ink/55">{story.details}</p>
         <Link
           to="#"
-          className="block font-body text-sm font-medium text-forest-light hover:text-forest transition-colors duration-300"
+          className="group mt-4 inline-flex items-center gap-1.5 font-body text-[0.82rem] font-semibold text-forest transition-colors hover:text-forest-light"
         >
-          Read Full Story &rarr;
+          Read full story
+          <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">
+            &rarr;
+          </span>
         </Link>
       </div>
-    </motion.div>
+    </motion.article>
   );
 }
 
@@ -355,83 +331,34 @@ function StoryCard({ story }: { story: typeof stories[0] }) {
 /* ------------------------------------------------------------------ */
 export default function Impact() {
   const [activeCategory, setActiveCategory] = useState<StoryCategory>('All');
-  const heroRef = useRef<HTMLDivElement>(null);
 
   const filteredStories = activeCategory === 'All'
     ? stories
     : stories.filter((s) => s.category === activeCategory);
 
-  /* Hero animations */
-  useGSAP(() => {
-    if (!heroRef.current) return;
-    const tl = gsap.timeline();
-    tl.fromTo('.impact-hero-label', { opacity: 0 }, { opacity: 1, duration: 0.6 })
-      .fromTo('.impact-hero-headline', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0.2)
-      .fromTo('.impact-hero-body', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.5)
-      .fromTo('.impact-hero-cta', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.7);
-  }, { scope: heroRef });
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
-      {/* ========== Section 1: Page Hero ========== */}
-      <section
-        ref={heroRef}
-        className="relative min-h-[55vh] flex items-center justify-center overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #0D2818 0%, #1B4332 100%)',
-        }}
-      >
-        {/* Animated background gradient */}
-        <div
-          className="absolute inset-0 opacity-60"
-          style={{
-            background: 'linear-gradient(135deg, #0D2818 0%, #1B4332 50%, #0D2818 100%)',
-            backgroundSize: '200% 200%',
-            animation: 'gradientShift 30s ease infinite',
-          }}
-        />
-        {/* Dot pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage: `radial-gradient(circle, #D4A574 1px, transparent 1px)`,
-            backgroundSize: '24px 24px',
-          }}
-        />
-        <div className="relative z-10 container-main text-center py-24 pt-32">
-          <span className="impact-hero-label section-label justify-center mb-6 opacity-0">
-            <span className="text-gold">OUR IMPACT</span>
-          </span>
-          <h1 className="impact-hero-headline font-display text-display-lg text-white mb-6 opacity-0">
-            Our Impact: 360° of Care in Action
-          </h1>
-          <p className="impact-hero-body font-body text-body-lg text-white/75 max-w-[640px] mx-auto mb-8 opacity-0">
-            Reaching communities across Kenya with comprehensive wellness services
-          </p>
-          <div className="impact-hero-cta opacity-0">
-            <button className="btn-outline-white inline-flex items-center gap-2 text-sm">
-              <Download className="w-4 h-4" />
-              Download 2024 Annual Report
-            </button>
-          </div>
-        </div>
-        <style>{`
-          @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-          }
-        `}</style>
-      </section>
+      <PageHero
+        label="Our impact"
+        title="Our Impact: 360° of Care in Action"
+        subtitle="Reaching communities across Kenya with comprehensive wellness services"
+        bgImage="/impact-story-1.jpg"
+        actions={
+          <button type="button" className="btn-outline inline-flex items-center gap-2">
+            <Download className="h-4 w-4" aria-hidden="true" />
+            Download 2024 annual report
+          </button>
+        }
+      />
 
-      {/* ========== Section 2: Live Metrics Dashboard ========== */}
-      <section className="bg-cream py-20">
+      {/* ============================ Live Metrics ============================ */}
+      <section className="bg-cream pb-[88px] pt-16 lg:pb-[110px] lg:pt-20">
         <div className="container-main">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-[1200px] mx-auto">
+          <div className="mx-auto grid max-w-[1200px] grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
             {metrics.map((metric, i) => (
               <StatCard key={metric.label} metric={metric} index={i} />
             ))}
@@ -439,157 +366,124 @@ export default function Impact() {
         </div>
       </section>
 
-      {/* ========== Section 3: Geographic Reach ========== */}
-      <section className="bg-cream-dark py-24">
+      {/* ============================ Geographic Reach ============================ */}
+      <section className="bg-cream-dark section-py">
         <div className="container-main">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Left: Map */}
-            <KenyaMap />
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            {/* Left: Map framed in a card */}
+            <Reveal>
+              <div className="rounded-[28px] border border-ink/10 bg-white p-5 shadow-soft sm:p-7">
+                <KenyaMap />
+              </div>
+            </Reveal>
 
             {/* Right: Stats */}
             <div>
-              <motion.span
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, ease: easeDramatic }}
-                className="section-label mb-4 block"
-              >
-                WHERE WE WORK
-              </motion.span>
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, ease: easeDramatic }}
-                className="font-display text-display-md text-forest mb-4"
-              >
-                From Local Communities to National Reach
-              </motion.h2>
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="font-body text-body-lg text-charcoal mb-8"
-              >
-                Kenya is our home base. Our mission extends across the country through collaborations with community organizations, clinical partners, and government agencies to deliver 360-degree wellness care.
-              </motion.p>
+              <Reveal>
+                <span className="eyebrow">Where we work</span>
+              </Reveal>
+              <Reveal delay={0.06}>
+                <h2 className="mt-5 font-display text-display-md leading-[1.08] tracking-[-0.025em] text-forest">
+                  From Local Communities to National Reach
+                </h2>
+              </Reveal>
+              <Reveal delay={0.12}>
+                <p className="mt-4 font-body text-body-lg leading-[1.75] text-ink/70">
+                  Kenya is our home base. Our mission extends across the country through collaborations
+                  with community organizations, clinical partners, and government agencies to deliver
+                  360-degree wellness care.
+                </p>
+              </Reveal>
 
               {/* Kenya Regions */}
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.25 }}
-                className="font-body font-semibold text-forest text-sm uppercase tracking-wider mb-4"
-              >
-                Kenya: 15 Counties
-              </motion.p>
-              <div className="space-y-6 mb-8">
+              <Reveal delay={0.16}>
+                <p className="mt-8 font-body text-[0.8rem] font-semibold text-forest">Kenya: 15 counties</p>
+              </Reveal>
+              <div className="mt-4 space-y-5">
                 {regions.map((region, i) => (
-                  <motion.div
-                    key={region.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: i * 0.1, ease: easeDramatic }}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-body font-semibold text-forest">{region.name}</span>
-                      <span className="font-body text-sm text-charcoal-light">{region.facilities} facilities</span>
+                  <Reveal key={region.name} delay={0.18 + i * 0.04}>
+                    <div className="border-t border-ink/10 pt-4">
+                      <div className="flex items-center justify-between gap-4">
+                        <span className="font-body text-[0.9rem] font-semibold text-forest">{region.name}</span>
+                        <span className="font-body text-[0.78rem] text-ink/55">{region.facilities} facilities</span>
+                      </div>
+                      <div className="mt-2.5">
+                        <ProgressBar width={region.width} delay={i * 0.15} />
+                      </div>
+                      <p className="mt-2 font-body text-[0.8rem] leading-[1.6] text-ink/55">
+                        {region.specialization}
+                      </p>
                     </div>
-                    <ProgressBar width={region.width} delay={i * 0.15} />
-                    <p className="font-body text-body-sm text-charcoal-light mt-1">{region.specialization}</p>
-                  </motion.div>
+                  </Reveal>
                 ))}
               </div>
 
               {/* East Africa */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4, ease: easeDramatic }}
-                className="border-t border-forest/10 pt-6 mb-6"
-              >
-                <p className="font-body font-semibold text-forest text-sm uppercase tracking-wider mb-2">
-                  East Africa: 4 Countries
-                </p>
-                <p className="font-body text-body text-charcoal-light">
-                  Building connections through shared training programs and coordinated wellness initiatives.
-                </p>
-              </motion.div>
+              <Reveal delay={0.34}>
+                <div className="mt-6 border-t border-ink/10 pt-5">
+                  <p className="font-body text-[0.8rem] font-semibold text-forest">East Africa: 4 countries</p>
+                  <p className="mt-1.5 font-body text-[0.9rem] leading-[1.7] text-ink/60">
+                    Building connections through shared training programs and coordinated wellness
+                    initiatives.
+                  </p>
+                </div>
+              </Reveal>
 
               {/* Global */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.5, ease: easeDramatic }}
-                className="border-t border-forest/10 pt-6"
-              >
-                <p className="font-body font-semibold text-forest text-sm uppercase tracking-wider mb-2">
-                  Global: 12+ Countries
-                </p>
-                <p className="font-body text-body text-charcoal-light">
-                  Partnerships with government agencies, international organizations, and foundations supporting our 360-degree wellness model.
-                </p>
-              </motion.div>
+              <Reveal delay={0.38}>
+                <div className="mt-5 border-t border-ink/10 pt-5">
+                  <p className="font-body text-[0.8rem] font-semibold text-forest">Global: 12+ countries</p>
+                  <p className="mt-1.5 font-body text-[0.9rem] leading-[1.7] text-ink/60">
+                    Partnerships with government agencies, international organizations, and foundations
+                    supporting our 360-degree wellness model.
+                  </p>
+                </div>
+              </Reveal>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ========== Section 4: Beneficiary Stories ========== */}
-      <section className="bg-cream py-24">
+      {/* ============================ Beneficiary Stories ============================ */}
+      <section className="bg-cream section-py">
         <div className="container-main">
-          <div className="text-center mb-10">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: easeDramatic }}
-              className="section-label justify-center mb-4 block"
-            >
-              STORIES OF IMPACT
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: easeDramatic }}
-              className="font-display text-display-lg text-forest"
-            >
-              The Lives We&apos;ve Touched
-            </motion.h2>
+          <div className="mx-auto max-w-2xl text-center">
+            <Reveal>
+              <span className="eyebrow justify-center">Stories of impact</span>
+            </Reveal>
+            <Reveal delay={0.06}>
+              <h2 className="mt-5 font-display text-display-lg leading-[1.04] tracking-[-0.025em] text-forest">
+                The Lives We&apos;ve Touched
+              </h2>
+            </Reveal>
           </div>
 
           {/* Filter tabs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap justify-center gap-3 mb-10"
-          >
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-2.5 rounded font-body text-xs font-semibold uppercase tracking-wider transition-all duration-300 ${
-                  activeCategory === cat
-                    ? 'bg-forest text-white'
-                    : 'border-2 border-forest text-forest bg-transparent hover:bg-forest hover:text-white'
-                }`}
-              >
-                {cat === 'All' ? 'All Stories' : cat}
-              </button>
-            ))}
-          </motion.div>
+          <Reveal delay={0.1}>
+            <div className="mt-9 flex flex-wrap justify-center gap-2">
+              {categories.map((cat) => {
+                const isActive = activeCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setActiveCategory(cat)}
+                    aria-pressed={isActive}
+                    className={`rounded-full px-4 py-2.5 font-body text-[0.78rem] font-semibold transition-colors duration-200 ${
+                      isActive
+                        ? 'bg-forest text-cream'
+                        : 'border border-ink/15 bg-transparent text-forest hover:border-forest/40 hover:bg-white'
+                    }`}
+                  >
+                    {cat === 'All' ? 'All stories' : cat}
+                  </button>
+                );
+              })}
+            </div>
+          </Reveal>
 
           {/* Story cards */}
-          <div className="max-w-[1100px] mx-auto space-y-12">
+          <div className="mx-auto mt-10 max-w-[1040px] space-y-5">
             <AnimatePresence mode="wait">
               {filteredStories.map((story) => (
                 <StoryCard key={story.id} story={story} />
@@ -599,150 +493,116 @@ export default function Impact() {
         </div>
       </section>
 
-      {/* ========== Section 5: Annual Reports ========== */}
-      <section className="bg-cream-dark py-24">
+      {/* ============================ Annual Reports ============================ */}
+      <section className="bg-cream-dark section-py">
         <div className="container-main">
-          <div className="text-center mb-10">
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: easeDramatic }}
-              className="section-label justify-center mb-4 block"
-            >
-              TRANSPARENCY
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: easeDramatic }}
-              className="font-display text-display-lg text-forest mb-4"
-            >
-              We Report Everything
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="font-body text-body-lg text-charcoal-light max-w-[560px] mx-auto"
-            >
-              Accountability is non-negotiable. Our annual reports detail every program, every shilling, and every outcome across all six pillars of 360-degree wellness. Download them here.
-            </motion.p>
+          <div className="mx-auto max-w-2xl text-center">
+            <Reveal>
+              <span className="eyebrow justify-center">Transparency</span>
+            </Reveal>
+            <Reveal delay={0.06}>
+              <h2 className="mt-5 font-display text-display-lg leading-[1.04] tracking-[-0.025em] text-forest">
+                We Report Everything
+              </h2>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <p className="mt-4 font-body text-body-lg leading-[1.75] text-ink/65">
+                Accountability is non-negotiable. Our annual reports detail every program, every shilling,
+                and every outcome across all six pillars of 360-degree wellness. Download them here.
+              </p>
+            </Reveal>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1000px] mx-auto mt-10">
-            {reports.map((report, i) => (
-              <motion.div
-                key={report.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.12, ease: easeDramatic }}
-                className="bg-white rounded-lg p-6 border border-forest/10 shadow-card hover:shadow-card-hover transition-all duration-400 hover:-translate-y-1"
-              >
-                <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-4 bg-cream-dark border border-forest/10 flex items-center justify-center">
-                  <span className="absolute top-3 left-3 font-body font-bold text-sm text-gold bg-white/90 px-2 py-1 rounded">
-                    {report.year}
-                  </span>
-                  <div className="text-center p-6">
-                    <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-forest/10 flex items-center justify-center">
-                      <Download className="w-7 h-7 text-forest" />
-                    </div>
-                    <p className="font-display text-lg text-forest">{report.title}</p>
+          <Stagger className="mx-auto mt-12 grid max-w-[1000px] grid-cols-1 gap-5 md:grid-cols-3">
+            {reports.map((report) => (
+              <StaggerItem key={report.title}>
+                <article className="card-base flex h-full flex-col p-6">
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gold/15 text-clay">
+                      <Download className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <span className="rounded-full bg-forest/[0.06] px-2.5 py-1 font-body text-[0.68rem] font-semibold text-forest">
+                      {report.year}
+                    </span>
                   </div>
-                </div>
-                <h3 className="font-body font-bold text-heading-lg text-forest mb-2">{report.title}</h3>
-                <p className="font-body text-body-sm text-charcoal-light mb-2">{report.description}</p>
-                <p className="font-body text-body-sm text-charcoal-light/60 mb-4">{report.meta}</p>
-                <button className="inline-flex items-center gap-2 font-body text-sm font-medium text-forest-light hover:text-forest transition-colors duration-300">
-                  <Download className="w-4 h-4" />
-                  Download PDF
-                </button>
-              </motion.div>
+                  <h3 className="mt-5 font-display text-heading-md leading-[1.3] tracking-[-0.02em] text-forest">
+                    {report.title}
+                  </h3>
+                  <p className="mt-2 font-body text-[0.84rem] leading-[1.65] text-ink/60">{report.description}</p>
+                  <p className="mt-3 font-body text-[0.72rem] text-ink/45">{report.meta}</p>
+                  <button
+                    type="button"
+                    className="group mt-auto inline-flex items-center gap-1.5 pt-5 font-body text-[0.82rem] font-semibold text-forest transition-colors hover:text-forest-light"
+                  >
+                    <Download className="h-4 w-4" aria-hidden="true" />
+                    Download PDF
+                  </button>
+                </article>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-center font-body text-body-sm text-charcoal-light/60 mt-8"
-          >
-            All reports are prepared to international nonprofit reporting standards (INPRS) and audited by independent auditors.
-          </motion.p>
+          <Reveal delay={0.15}>
+            <p className="mx-auto mt-8 max-w-[620px] text-center font-body text-[0.78rem] leading-[1.6] text-ink/45">
+              All reports are prepared to international nonprofit reporting standards (INPRS) and audited
+              by independent auditors.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      {/* ========== Section 6: Recognition ========== */}
-      <section className="bg-cream py-16">
+      {/* ============================ Recognition ============================ */}
+      <section className="bg-cream py-16 lg:py-20">
         <div className="container-main">
-          <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="font-body font-semibold text-heading-md text-forest text-center mb-6"
-          >
-            Recognized By
-          </motion.h3>
-          <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-12">
-            {recognitionLogos.map((logo, i) => (
-              <motion.div
-                key={logo}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="w-[100px] h-[50px] flex items-center justify-center grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300 cursor-pointer"
-              >
-                <span className="font-body text-xs font-bold text-forest text-center uppercase tracking-wider">{logo}</span>
-              </motion.div>
-            ))}
-          </div>
+          <Reveal>
+            <h3 className="text-center font-display text-heading-lg leading-[1.2] tracking-[-0.02em] text-forest">
+              Recognized by
+            </h3>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <div className="mx-auto mt-7 grid max-w-[860px] grid-cols-2 overflow-hidden rounded-card border border-ink/10 bg-white/60 sm:grid-cols-3 lg:grid-cols-4">
+              {recognitionLogos.map((logo) => (
+                <div
+                  key={logo}
+                  className="flex min-h-[76px] items-center justify-center border-b border-r border-ink/[0.07] px-4 last:border-r-0"
+                >
+                  <span className="text-center font-body text-[0.74rem] font-semibold leading-tight text-forest/55">
+                    {logo}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ========== Section 7: CTA ========== */}
-      <section className="bg-forest py-24">
+      {/* ============================ CTA ============================ */}
+      <section className="bg-forest section-py">
         <div className="container-main text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: easeDramatic }}
-            className="font-display text-display-md text-white mb-4"
-          >
-            Help Us Expand 360° of Care
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="font-body text-body-lg text-white/75 max-w-[560px] mx-auto mb-8"
-          >
-            Every donation, every partnership, every hour volunteered creates measurable change across our six strategic pillars. Be part of the 360-degree solution.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-4"
-          >
-            <Link to="/get-involved" className="btn-gold">
-              Donate Now
-            </Link>
-            <Link to="/partners" className="btn-outline-white">
-              Partner With Us
-            </Link>
-            <Link to="/programs" className="btn-outline-white">
-              View Programs
-            </Link>
-          </motion.div>
+          <Reveal>
+            <h2 className="mx-auto max-w-2xl font-display text-display-md leading-[1.1] tracking-[-0.025em] text-cream">
+              Help Us Expand 360° of Care
+            </h2>
+          </Reveal>
+          <Reveal delay={0.06}>
+            <p className="mx-auto mt-4 max-w-[560px] font-body text-body-lg leading-[1.75] text-cream/70">
+              Every donation, every partnership, every hour volunteered creates measurable change across
+              our six strategic pillars. Be part of the 360-degree solution.
+            </p>
+          </Reveal>
+          <Reveal delay={0.12}>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Link to="/get-involved" className="btn-gold">
+                Donate now
+              </Link>
+              <Link to="/partners" className="btn-outline-white">
+                Partner with us
+              </Link>
+              <Link to="/programs" className="btn-outline-white">
+                View programs
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
     </motion.div>

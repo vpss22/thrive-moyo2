@@ -1,37 +1,31 @@
-import { useState } from 'react';
 import { Phone } from 'lucide-react';
 
-export default function CrisisButton() {
-  const [hovered, setHovered] = useState(false);
+const HELPLINE_TEL = 'tel:+254719288177';
 
+/**
+ * Floating 24/7 help pill. White surface + crisis dot so it stays legible on
+ * both cream and forest sections. Sits above content with safe-area padding.
+ */
+export default function CrisisButton() {
   return (
     <a
-      href="tel:+254719288177"
-      className="fixed bottom-6 right-6 z-[200] flex items-center gap-3 group"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      href={HELPLINE_TEL}
+      aria-label="Call the 24/7 confidential helpline on 0719 288 177"
+      className="group fixed right-4 bottom-[calc(1.25rem+env(safe-area-inset-bottom))] z-[80] inline-flex items-center gap-2.5 rounded-full border border-ink/10 bg-white py-2 pl-2 pr-2.5 shadow-float transition-all duration-200 hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-lift sm:right-6 sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))] sm:pr-4"
     >
-      {/* Label */}
-      <span
-        className={`font-body text-xs font-semibold text-white bg-crisis px-3 py-2 rounded whitespace-nowrap transition-all duration-300 ${
-          hovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4 pointer-events-none'
-        }`}
-        style={{ boxShadow: '0 4px 20px rgba(192,57,43,0.4)' }}
-      >
-        24/7 Help Line
-      </span>
-
-      {/* Button */}
-      <div className="relative">
-        {/* Pulse ring */}
-        <span className="absolute inset-0 rounded-full bg-crisis/30 animate-pulse-ring" />
+      <span className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-crisis text-white">
         <span
-          className="relative flex items-center justify-center w-16 h-16 rounded-full bg-crisis text-white transition-all duration-300 group-hover:scale-110"
-          style={{ boxShadow: '0 4px 20px rgba(192,57,43,0.4)' }}
-        >
-          <Phone className="w-6 h-6" />
+          aria-hidden="true"
+          className="absolute inset-0 rounded-full bg-crisis/35 animate-pulse-ring"
+        />
+        <Phone className="relative h-4 w-4" aria-hidden="true" />
+      </span>
+      <span className="hidden text-left leading-tight sm:block">
+        <span className="block font-body text-[0.8rem] font-semibold text-forest">24/7 Help</span>
+        <span className="block font-body text-[0.65rem] font-medium text-ink/55">
+          Confidential · Kenya
         </span>
-      </div>
+      </span>
     </a>
   );
 }
